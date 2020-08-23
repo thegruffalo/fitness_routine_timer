@@ -1,4 +1,4 @@
-const staticDevCoffee = "fitness_routine_timer-v1";
+const staticFitnessRoutineTimer = "fitness_routine_timer-v1";
 const assets = [
   "",
   "index.html",
@@ -17,7 +17,7 @@ const assets = [
 
 self.addEventListener("install", installEvent => {
   installEvent.waitUntil(
-    caches.open(staticDevCoffee).then(cache => {
+    caches.open(staticFitnessRoutineTimer).then(cache => {
       cache.addAll(assets);
     })
   );
