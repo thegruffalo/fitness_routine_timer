@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <!-- ios support -->
+  <link rel="apple-touch-icon" href="images/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" href="images/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" href="images/icons/icon-128x128.png" />
+  <link rel="apple-touch-icon" href="images/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" href="images/icons/icon-152x152.png" />
+  <link rel="apple-touch-icon" href="images/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" href="images/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" href="images/icons/icon-512x512.png" />
+  <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+  <meta name="theme-color" content="#db4938" />
+  <title>Fitness Routine Timer</title>
+</head>
+
+<body>
+  <main>
+    <nav>
+      <h1>Fitness Routine Timer</h1>
+    </nav>
+    <div id="app">
+      <div id="routine_list"></div>
+      <div id="routine_detail"></div>
+      <div id="routine_timer"></div>
+    </div>
+  </main>
+  <script src="js/umbrella.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/extend.js"></script>
+  <script src="js/handlebars.min-v4.7.6.js"></script>
+  <script src="js/routines/models.js"></script>
+  <script src="js/routines/basic_s_and_c.js"></script>
+  <script src="js/routines/body_weight_1.js"></script>
+  <script src="js/routines/body_weight_2.js"></script>
+  <script src="js/routines/body_weight_3.js"></script>
+  <script src="js/routines/body_weight_4.js"></script>
+  <script id="template_routine_list" type="text/x-handlebars-template">
+      <div class="container">
+        {{#each this}}
+        <div data-item="{{@index}}" class="card">
+          <h1>{{name}}</h1>
+        </div>
+        {{/each}}
+      </div>
+    </script>
+  <script id="template_routine_detail" type="text/x-handlebars-template">
+      <div class="container card">
+        <h1>{{name}}</h1>
+        <ul>
+        {{#each subRoutines}}
+          <li><span>{{name}}</span>
+            {{#if_gt sets 1}}
+              <span>- x{{sets}}</h1>
+            {{/if_gt}}
+          </li>
+            <ul>
+              {{#each intervals}}
+                <li>{{name}} - {{duration}}s</li>
+              {{/each}}
+            </ul>
+        {{/each}}
+      </ul>
+      <button id="close">Close</button>
+      <button id="start">Start</button>
+      </div>
+    </script>
+  <script id="template_routine_timer" type="text/x-handlebars-template">
+      <div class="container card">
+        <h1>{{name}}</h1>
+        <div id="routine_timer_display">
+        </div>
+      <button id="pause">Pause</button>
+      <button id="end">End</button>
+      </div>
+    </script>
+
+  <script id="template_routine_timer_display" type="text/x-handlebars-template">
+      <div>
+        <div id="elapsed">{{seconds}}</div>
+        {{#if paused}}
+        <div class="paused">paused</div>
+        {{/if}}
+      </div>
+  </script>
+
+</body>
+
+</html>
