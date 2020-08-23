@@ -23,15 +23,16 @@ nav {
   align-items: center;
 }
 
-ul {
-  list-style: none;
+.detail-container{
   text-align: left;
+}
+
+.detail-container summary{
   font-size: large;
 }
 
-ul ul {
+.detail-container details div{
   margin-left: 1rem;
-  font-size: medium;
 }
 
 h1 {
@@ -58,18 +59,44 @@ h1 {
   overflow: hidden;
 }
 
-.card--title {
-  color: #222;
-  font-weight: 700;
-  text-transform: capitalize;
-  font-size: 1.1rem;
-  margin-top: 0.5rem;
+.btn{
+	display:inline-block;
+	cursor:pointer;
+	font-size:1.8rem;
+	font-weight:bold;
+	padding:0.5rem 1rem;
+	text-decoration:none;
+	border-radius:0.5rem;
+}
+.btn-secondary {
+	box-shadow: 0px 10px 14px -7px #276873;
+	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+	background-color:#599bb3;
+	color:#ffffff;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.btn-secondary:hover {
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	background-color:#408c99;
+}
+.btn-secondary:active {
+	position:relative;
+	top:1px;
 }
 
-.card--link {
-  text-decoration: none;
-  background: #db4938;
-  color: #fff;
-  padding: 0.3rem 1rem;
-  border-radius: 20px;
+.btn-primary {
+	box-shadow: 0px 10px 14px -7px #3e7327;
+	background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+	background-color:#77b55a;
+	border:1px solid #4b8f29;
+	color:#ffffff;
+	text-shadow:0px 1px 0px #5b8a3c;
+}
+.btn-primary:hover {
+	background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+	background-color:#72b352;
+}
+.btn-primary:active {
+	position:relative;
+	top:1px;
 }

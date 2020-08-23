@@ -54,22 +54,22 @@
   <script id="template_routine_detail" type="text/x-handlebars-template">
       <div class="container card">
         <h1>{{name}}</h1>
-        <ul>
+        <div class="detail-container">
         {{#each subRoutines}}
-          <li><span>{{name}}</span>
+        <details>
+          <summary><span>{{name}}</span>
             {{#if_gt sets 1}}
               <span>- x{{sets}}</h1>
             {{/if_gt}}
-          </li>
-            <ul>
+              </summary>
               {{#each intervals}}
-                <li>{{name}} - {{duration}}s</li>
+                <div>{{name}} - {{duration}}s</div>
               {{/each}}
-            </ul>
+        </details>
         {{/each}}
-      </ul>
-      <button id="close">Close</button>
-      <button id="start">Start</button>
+    </div>
+      <a class="btn btn-secondary" id="close">Close</a>
+      <a class="btn btn-primary" id="start">Start</a>
       </div>
     </script>
   <script id="template_routine_timer" type="text/x-handlebars-template">
@@ -77,8 +77,8 @@
         <h1>{{name}}</h1>
         <div id="routine_timer_display">
         </div>
-      <button id="pause">Pause</button>
-      <button id="end">End</button>
+      <a class="btn btn-primary"  id="pause">Pause</a>
+      <a class="btn btn-secondary"  id="end">End</a>
       </div>
     </script>
 
