@@ -1,18 +1,18 @@
-const staticDevCoffee = "dev-coffee-site-v1";
+const staticDevCoffee = "fitness_routine_timer-v1";
 const assets = [
-  "/",
-  "/index.html",
-  "/css/style.css",
-  "/js/app.js",
-  "/images/coffee1.jpg",
-  "/images/coffee2.jpg",
-  "/images/coffee3.jpg",
-  "/images/coffee4.jpg",
-  "/images/coffee5.jpg",
-  "/images/coffee6.jpg",
-  "/images/coffee7.jpg",
-  "/images/coffee8.jpg",
-  "/images/coffee9.jpg"
+  "",
+  "index.html",
+  "css/style.css",
+  "js/app.js",
+  "js/extend.js",
+  "js/handlebars.min-v4.7.6.js",
+  "js/umbrella.min.js",
+  "js/routines/models.js",
+  "js/routines/basic_s_and_c.js",
+  "js/routines/body_weight_1.js",
+  "js/routines/body_weight_2.js",
+  "js/routines/body_weight_3.js",
+  "js/routines/body_weight_4.js",
 ];
 
 self.addEventListener("install", installEvent => {
