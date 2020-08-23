@@ -3,6 +3,23 @@ const myNS = { "routines": [] };
 
 const routines = myNS.routines;
 
+// The wake lock sentinel.
+let wakeLock = null;
+
+// Function that attempts to request a screen wake lock.
+const requestWakeLock = async () => {
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLock.addEventListener('release', () => {
+      console.log('Screen Wake Lock was released');
+    });
+    console.log('Screen Wake Lock is active');
+  } catch (err) {
+    console.error(`${err.name}, ${err.message}`);
+  }
+};
+
+
 class RoutineTimer {
   routine;
   interval_timer;
@@ -24,9 +41,11 @@ class RoutineTimer {
     this.updateUI();
   };
 
-  start = () => {
+  start = async () => {
     this.interval_timer = window.setInterval(this.onTick, 250);
     this.last_time = new Date().getTime();
+    // Request a screen wake lock…
+    await requestWakeLock();
   }
 
   pause = () => {
@@ -59,6 +78,8 @@ const startRoutine = (routine) => {
     if (confirm("Are you sure you want to end?")) {
       u("#routine_timer .container").remove();
       myNS.routine_timer = null;
+      wakeLock.release();
+      wakeLock = null;    
       displayRoutineList();
     }
     else {
