@@ -1,14 +1,14 @@
 const warmup = [
     new Exercise("Jog", 20),
-    new Exercise("Push ups", 20),
+    new Exercise("Push ups", 10),
     new Exercise("Jog", 20),
-    new Exercise("Slow Squats", 20),
-    new Exercise("Jumping Jacks", 20),
+    new Exercise("Slow Squats", 15),
+    new Exercise("Jumping Jacks", 15),
     new Exercise("Lunge & stretch", 20),
     new Exercise("Jog", 20),
-    new Exercise("Slow burpees", 20),
-    new Exercise("Shoulder Roll", 20),
-    new Exercise("Core rotation", 20)
+    new Exercise("Slow burpees", 15),
+    new Exercise("Shoulder Roll", 15),
+    new Exercise("Core rotation", 15)
 ];
 
 const cooldown = [

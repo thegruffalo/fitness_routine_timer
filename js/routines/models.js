@@ -24,11 +24,11 @@ class Exercise extends Interval{
 
 class Routine{
     name;
-    subRoutines;
+    sub_routines;
     _type = "Routine";
-    constructor(name, subRoutines = []){
+    constructor(name, sub_routines = []){
         this.name = name;
-        this.subRoutines = subRoutines;
+        this.sub_routines = sub_routines || [];
     }
 }
 
@@ -47,5 +47,35 @@ class SubRoutine{
         this.duration_between_sets = duration_between_sets;
         this.start_delay = start_delay;
         this.end_delay = end_delay;
+    }
+}
+
+class CountdownTimerVM{
+    group_name = "Workout";
+    name = "push ups";
+    duration = 20;
+    time_left = 20;
+    alert_with_time_to_go = 1;
+    set_detail = "1/2";
+    constructor(group_name, name, duration, alert_with_time_to_go, set_detail){
+        this.group_name = group_name;
+        this.name = name;
+        this.duration = duration;
+        this.alert_with_time_to_go = alert_with_time_to_go;
+        this.set_detail = set_detail;
+        this.time_left = duration;
+    }
+}
+class RoutineTimerVM{
+    name ="Workout1";
+    countdown_timers = [];
+    total_duration = 0;
+    time_elapsed = 0;
+    current = null;
+    next = null;
+    constructor(name, countdown_timers){
+        this.name = name;
+        this.countdown_timers = countdown_timers || [];
+        this.total_duration = countdown_timers.reduce( (p,c) => {return p+c;}, 0);
     }
 }

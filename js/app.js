@@ -27,9 +27,36 @@ class RoutineTimer {
   elapsed = 0;
   paused = false;
   seconds = 0;
+  vm = null;
   constructor(routine, updateUI) {
     this.routine = routine;
     this.updateUI = () =>updateUI(this);
+    let countdownTimerVMs = [];
+    routine.sub_routines.forEach((sr) => {
+      for( var i = 1; i <= sr.sets; i++){
+        let set_info = "";
+        if( sr.sets > 1){
+          set_info = `{{i}}/{{sets}}`;
+        }
+        if( i == 1 && sr.start_delay > 0){
+          let timerVM = new CountdownTimerVM(sr.name, "Get ready!", sr.start_delay, 3, set_info);
+          countdownTimerVMs.push(timerVM);
+        }
+        sr.intervals.forEach((i)=>{
+          let timerVM = new CountdownTimerVM(sr.name, i.name, i.duration, 3, set_info);
+          countdownTimerVMs.push(timerVM);
+        });
+        if( sr.duration_between_sets > 0 && i < sr.sets){
+          let timerVM = new CountdownTimerVM(sr.name, "Set complete!", sr.duration_between_sets, 3, set_info);
+          countdownTimerVMs.push(timerVM);
+        }
+      }
+      if( i == sr.sets && sr.end_delay > 0){
+        let timerVM = new CountdownTimerVM(sr.name, "Well done!", sr.end_delay, 3, set_info);
+        countdownTimerVMs.push(timerVM);
+      }
+    });
+    this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs);
   }
 
   onTick = () => {
@@ -39,10 +66,13 @@ class RoutineTimer {
     this.seconds = Math.floor(this.elapsed / 1000);
     this.last_time = now;
     this.updateUI();
+    if( this.seconds > 5){
+      beep();
+    }
   };
 
   start = async () => {
-    this.interval_timer = window.setInterval(this.onTick, 250);
+    this.interval_timer = window.setInterval(this.onTick, 1000);
     this.last_time = new Date().getTime();
     // Request a screen wake lock…
     await requestWakeLock();
@@ -146,3 +176,29 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.log("service worker not registered", err));
   });
 }
+
+//if you have another AudioContext class use that one, as some browsers have a limit
+var audioCtx = new (window.AudioContext || window.webkitAudioContext || window.audioContext);
+
+//All arguments are optional:
+
+//duration of the tone in milliseconds. Default is 500
+//frequency of the tone in hertz. default is 440
+//volume of the tone. Default is 1, off is 0.
+//type of tone. Possible values are sine, square, sawtooth, triangle, and custom. Default is sine.
+//callback to use on end of tone
+function beep(duration, frequency, volume, type, callback) {
+    var oscillator = audioCtx.createOscillator();
+    var gainNode = audioCtx.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    if (volume){gainNode.gain.value = volume;}
+    if (frequency){oscillator.frequency.value = frequency;}
+    if (type){oscillator.type = type;}
+    if (callback){oscillator.onended = callback;}
+
+    oscillator.start(audioCtx.currentTime);
+    oscillator.stop(audioCtx.currentTime + ((duration || 500) / 1000));
+};
