@@ -1,3 +1,5 @@
+import {Exercise, SubRoutine} from './models.js';
+
 const warmup = [
     new Exercise("Jog", 20),
     new Exercise("Push ups", 10),
@@ -26,11 +28,9 @@ const cooldown = [
     "Tricep L"
 ].map(x => new Exercise(x, 20));
 
-extend(myNS, {
-    "sub_routines": {
-        "basic_s_and_c": {
-            "warmup": new SubRoutine("Warmup",warmup),
-            "cooldown": new SubRoutine("Cooldown",cooldown)
-        }
-    }
-});
+const basic_s_and_c = {
+    "warmup": new SubRoutine("Warmup",warmup),
+    "cooldown": new SubRoutine("Cooldown",cooldown)
+};
+
+export default basic_s_and_c;

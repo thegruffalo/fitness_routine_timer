@@ -104,7 +104,14 @@ h1 {
   font-size: 4rem;
   color: red;
 }
-.countdown{
-  font-size: 4rem;
+#interval_time_left{
+  font-size: 3rem;
   color: green;
+}
+#interval_current{
+  font-size: 1.5rem;
+  color: green;
+}
+#interval_next{
+  font-size: 1.1rem;
 }

@@ -1,7 +1,19 @@
+import { beep } from './sound.js';
+import r1 from './routines/body_weight_1.js';
+import r2 from './routines/body_weight_2.js';
+import { CountdownTimerVM, RoutineTimerVM } from './view_models.js';
+
 const app_container = document.getElementById("app");
-const myNS = { "routines": [] };
+const myNS = {
+  "routines": [
+    r1,
+    r2
+  ]
+};
 
 const routines = myNS.routines;
+
+var handlebar_functions = {};
 
 // The wake lock sentinel.
 let wakeLock = null;
@@ -24,56 +36,58 @@ class RoutineTimer {
   routine;
   interval_timer;
   last_time = 0;
-  elapsed = 0;
   paused = false;
-  seconds = 0;
+  complete = false;
   vm = null;
-  constructor(routine, updateUI) {
+  constructor(routine, update_ui_fn) {
     this.routine = routine;
-    this.updateUI = () =>updateUI(this);
+    this.update_ui_fn = () => update_ui_fn(this);
     let countdownTimerVMs = [];
     routine.sub_routines.forEach((sr) => {
-      for( var i = 1; i <= sr.sets; i++){
+      for (var i = 1; i <= sr.sets; i++) {
         let set_info = "";
-        if( sr.sets > 1){
+        if (sr.sets > 1) {
           set_info = `{{i}}/{{sets}}`;
         }
-        if( i == 1 && sr.start_delay > 0){
+        if (i == 1 && sr.start_delay > 0) {
           let timerVM = new CountdownTimerVM(sr.name, "Get ready!", sr.start_delay, 3, set_info);
           countdownTimerVMs.push(timerVM);
         }
-        sr.intervals.forEach((i)=>{
+        sr.intervals.forEach((i) => {
           let timerVM = new CountdownTimerVM(sr.name, i.name, i.duration, 3, set_info);
           countdownTimerVMs.push(timerVM);
         });
-        if( sr.duration_between_sets > 0 && i < sr.sets){
+        if (sr.duration_between_sets > 0 && i < sr.sets) {
           let timerVM = new CountdownTimerVM(sr.name, "Set complete!", sr.duration_between_sets, 3, set_info);
           countdownTimerVMs.push(timerVM);
         }
       }
-      if( i == sr.sets && sr.end_delay > 0){
+      if (i == sr.sets && sr.end_delay > 0) {
         let timerVM = new CountdownTimerVM(sr.name, "Well done!", sr.end_delay, 3, set_info);
         countdownTimerVMs.push(timerVM);
       }
     });
-    this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs);
+    this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn);
   }
 
   onTick = () => {
     var now = new Date().getTime();
     var diff = now - this.last_time;
-    this.elapsed += diff;
-    this.seconds = Math.floor(this.elapsed / 1000);
     this.last_time = now;
-    this.updateUI();
-    if( this.seconds > 5){
-      beep();
+    this.vm.tick(diff);
+    if( this.vm.current == null){
+      window.clearInterval(this.interval_timer);
+      this.interval_timer = undefined;
+      this.complete = true;
+      this.update_ui_fn();
+  
     }
   };
 
   start = async () => {
     this.interval_timer = window.setInterval(this.onTick, 1000);
     this.last_time = new Date().getTime();
+    this.vm.current_index = 0;
     // Request a screen wake lock…
     await requestWakeLock();
   }
@@ -82,14 +96,14 @@ class RoutineTimer {
     window.clearInterval(this.interval_timer);
     this.interval_timer = undefined;
     this.paused = true;
-    this.updateUI();
+    this.update_ui_fn();
   };
 
   unpause = () => {
     this.interval_timer = window.setInterval(this.onTick, 250);
     this.last_time = new Date().getTime();
     this.paused = false;
-    this.updateUI();
+    this.update_ui_fn();
   };
 
 }
@@ -97,19 +111,22 @@ class RoutineTimer {
 const startRoutine = (routine) => {
   u("#routine_detail .container").remove();
 
-  myNS.routine_timer = new RoutineTimer(routine, (rt) =>{
-    document.getElementById("routine_timer_display").innerHTML = myNS.handlebar_functions.showRoutineTimerDisplay(rt);
-  } );
+  myNS.routine_timer = new RoutineTimer(routine, (rt) => {
+    document.getElementById("routine_timer_display").innerHTML = handlebar_functions.showRoutineTimerDisplay(rt,
+      {
+        allowProtoPropertiesByDefault: true
+      });
+  });
   myNS.routine_timer.start();
 
-  document.getElementById("routine_timer").innerHTML = myNS.handlebar_functions.showRoutineTimer(routine);
+  document.getElementById("routine_timer").innerHTML = handlebar_functions.showRoutineTimer(routine);
   u("#routine_timer #end").on("click", (ev) => {
     myNS.routine_timer.pause();
     if (confirm("Are you sure you want to end?")) {
       u("#routine_timer .container").remove();
       myNS.routine_timer = null;
       wakeLock.release();
-      wakeLock = null;    
+      wakeLock = null;
       displayRoutineList();
     }
     else {
@@ -117,9 +134,9 @@ const startRoutine = (routine) => {
     }
   });
   u("#routine_timer #pause").on("click", (ev) => {
-    if( myNS.routine_timer.paused){
+    if (myNS.routine_timer.paused) {
       myNS.routine_timer.unpause();
-    }else{
+    } else {
       myNS.routine_timer.pause();
     }
   });
@@ -128,7 +145,7 @@ const startRoutine = (routine) => {
 
 const displayRoutine = (routine) => {
   u("#routine_list .container").remove();
-  document.getElementById("routine_detail").innerHTML = myNS.handlebar_functions.showRoutineDetail(routine);
+  document.getElementById("routine_detail").innerHTML = handlebar_functions.showRoutineDetail(routine);
   u("#routine_detail #close").on("click", (ev) => {
     u("#routine_detail .container").remove();
     displayRoutineList();
@@ -140,7 +157,7 @@ const displayRoutine = (routine) => {
 
 const displayRoutineList = () => {
   u("#routine_list").attr("style", "display:block");
-  document.getElementById("routine_list").innerHTML = myNS.handlebar_functions.showListOfRoutines(routines);
+  document.getElementById("routine_list").innerHTML = handlebar_functions.showListOfRoutines(routines);
   u("#routine_list .card").on("click", (ev) => {
     var itemIndex = u(ev.currentTarget).data("item");
     displayRoutine(routines[itemIndex]);
@@ -148,14 +165,12 @@ const displayRoutineList = () => {
 };
 
 const onLoaded = () => {
-  extend(myNS, {
-    "handlebar_functions": {
-      "showListOfRoutines": Handlebars.compile(document.getElementById("template_routine_list").innerHTML),
-      "showRoutineDetail": Handlebars.compile(document.getElementById("template_routine_detail").innerHTML),
-      "showRoutineTimer": Handlebars.compile(document.getElementById("template_routine_timer").innerHTML),
-      "showRoutineTimerDisplay": Handlebars.compile(document.getElementById("template_routine_timer_display").innerHTML),
-    }
-  });
+  handlebar_functions = {
+    "showListOfRoutines": Handlebars.compile(document.getElementById("template_routine_list").innerHTML),
+    "showRoutineDetail": Handlebars.compile(document.getElementById("template_routine_detail").innerHTML),
+    "showRoutineTimer": Handlebars.compile(document.getElementById("template_routine_timer").innerHTML),
+    "showRoutineTimerDisplay": Handlebars.compile(document.getElementById("template_routine_timer_display").innerHTML),
+  };
 
   Handlebars.registerHelper('if_gt', function (a, b, opts) {
     if (a > b) {
@@ -164,6 +179,29 @@ const onLoaded = () => {
       return opts.inverse(this);
     }
   });
+
+  Handlebars.registerHelper('to_time', function (total_seconds) {
+    var seconds = total_seconds % 60;
+    var total_minutes = Math.floor(total_seconds / 60);
+    var minutes = total_minutes % 60;
+    var hours = Math.floor(total_minutes / 60);
+    var minutes_display = ("00" + String(minutes)).slice(-2);
+    var seconds_display = ("00" + String(seconds)).slice(-2);
+    var formatted = hours > 0 ? `${hours}:` : "";
+    formatted += `${minutes_display}:${seconds_display}`;
+    return formatted;
+  });
+
+  Handlebars.registerHelper('helperMissing', function ( /* dynamic arguments */) {
+    var options = arguments[arguments.length - 1];
+    var args = Array.prototype.slice.call(arguments, 0, arguments.length - 1)
+    return new Handlebars.SafeString("Missing: " + options.name + "(" + args + ")")
+  });
+  Handlebars.registerHelper('blockHelperMissing', function (context, options) {
+    return "Helper '" + options.name + "' not found. "
+      + "Printing block: " + options.fn(context);
+  });
+
   displayRoutineList();
 }
 document.addEventListener("DOMContentLoaded", onLoaded);
@@ -176,29 +214,3 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.log("service worker not registered", err));
   });
 }
-
-//if you have another AudioContext class use that one, as some browsers have a limit
-var audioCtx = new (window.AudioContext || window.webkitAudioContext || window.audioContext);
-
-//All arguments are optional:
-
-//duration of the tone in milliseconds. Default is 500
-//frequency of the tone in hertz. default is 440
-//volume of the tone. Default is 1, off is 0.
-//type of tone. Possible values are sine, square, sawtooth, triangle, and custom. Default is sine.
-//callback to use on end of tone
-function beep(duration, frequency, volume, type, callback) {
-    var oscillator = audioCtx.createOscillator();
-    var gainNode = audioCtx.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-
-    if (volume){gainNode.gain.value = volume;}
-    if (frequency){oscillator.frequency.value = frequency;}
-    if (type){oscillator.type = type;}
-    if (callback){oscillator.onended = callback;}
-
-    oscillator.start(audioCtx.currentTime);
-    oscillator.stop(audioCtx.currentTime + ((duration || 500) / 1000));
-};

@@ -33,15 +33,15 @@
     </div>
   </main>
   <script src="js/umbrella.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/extend.js"></script>
   <script src="js/handlebars.min-v4.7.6.js"></script>
-  <script src="js/routines/models.js"></script>
+
+  <script type="module" src="js/app.js"></script>
+  <!-- <script src="js/routines/models.js"></script>
   <script src="js/routines/basic_s_and_c.js"></script>
-  <script src="js/routines/body_weight_1.js"></script>
-  <script src="js/routines/body_weight_2.js"></script>
+  <script src="js/routines/body_weight_1.js"></script> -->
+  <!-- <script src="js/routines/body_weight_2.js"></script>
   <script src="js/routines/body_weight_3.js"></script>
-  <script src="js/routines/body_weight_4.js"></script>
+  <script src="js/routines/body_weight_4.js"></script> -->
   <script id="template_routine_list" type="text/x-handlebars-template">
       <div class="container">
         {{#each this}}
@@ -84,9 +84,23 @@
 
   <script id="template_routine_timer_display" type="text/x-handlebars-template">
       <div>
-        <div id="elapsed">{{seconds}}</div>
+        <div id="total_time">Total time: {{to_time vm.total_duration}}</div>
+        <div id="time_left"><span>Total </span><span>{{to_time vm.time_left}}</span> to go</div>
         {{#if paused}}
-        <div class="paused">paused</div>
+        <div class="paused">Paused</div>
+        {{/if}}
+        {{#if complete}}
+        <div class="complete">Complete</div>
+        {{else}}
+          {{#with vm}}
+          <div id="interval_current"><span>{{current.group_name}}</span><span>-</span><span>{{current.name}}</span></div>
+          <div id="interval_time_left"><span>{{to_time current.time_left}}</span></div>
+          {{#if next}}
+          <div id="interval_next"><span>Next:</span>
+            <span>{{next.group_name}}</span>
+            <span>-</span><span>{{next.name}}</span></div>
+            {{/if}}
+          {{/with}}
         {{/if}}
       </div>
   </script>
