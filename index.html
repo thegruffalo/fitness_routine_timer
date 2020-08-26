@@ -56,7 +56,7 @@
         <h1>{{name}}</h1>
         <div class="detail-container">
         {{#each sub_routines}}
-        <details>
+        <details {{summary_open}}>
           <summary><span>{{name}}</span>
             {{#if_gt sets 1}}
               <span>- x{{sets}}</h1>

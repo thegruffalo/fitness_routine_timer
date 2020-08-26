@@ -1,6 +1,6 @@
 export default
 {
-    "name": "Body Weight 2",
+    "name": "Week 2 Session 2",
     "sub_routines": [
         {
             "name": "Warmup",

@@ -1,6 +1,14 @@
 import { beep } from './sound.js';
 import r1 from './routines/body_weight_1.js';
-import r2 from './routines/body_weight_2.js';
+import w1s1 from './routines/week_1_session_1.js';
+import w1s2 from './routines/week_1_session_2.js';
+import w1s3 from './routines/week_1_session_3.js';
+import w2s1 from './routines/week_2_session_1.js';
+import w2s2 from './routines/week_2_session_2.js';
+import w2s3 from './routines/week_2_session_3.js';
+import w3s1 from './routines/week_3_session_1.js';
+import w3s2 from './routines/week_3_session_2.js';
+import w3s3 from './routines/week_3_session_3.js';
 import t from './routines/test.js';
 import { CountdownTimerVM, RoutineTimerVM } from './view_models.js';
 
@@ -8,12 +16,25 @@ const app_container = document.getElementById("app");
 const myNS = {
   "routines": [
     r1,
-    r2,
+    w1s1,
+    w1s2,
+    w1s3,
+    w2s1,
+    w2s2,
+    w2s3,
+    w3s1,
+    w3s2,
+    w3s3,
     t
   ]
 };
 
 const routines = myNS.routines;
+routines.forEach((r) => {
+  r.sub_routines.forEach((sr) => {
+    sr.summary_open = (sr.sets > 1) ? "open" : "";
+  });
+});
 
 var handlebar_functions = {};
 
@@ -77,12 +98,12 @@ class RoutineTimer {
     var diff = now - this.last_time;
     this.last_time = now;
     this.vm.tick(diff);
-    if( this.vm.current == null){
+    if (this.vm.current == null) {
       window.clearInterval(this.interval_timer);
       this.interval_timer = undefined;
       this.complete = true;
       this.update_ui_fn();
-  
+
     }
   };
 
