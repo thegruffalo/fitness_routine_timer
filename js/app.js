@@ -111,6 +111,9 @@ class RoutineTimer {
       this.interval_timer = undefined;
       this.complete = true;
       this.update_ui_fn();
+      u("#ok").attr("style","display:inline-block;");
+      u("#pause").attr("style","display:none;");
+      u("#end").attr("style","display:none;");
     }
   };
 
@@ -170,6 +173,13 @@ const startRoutine = (routine) => {
       myNS.routine_timer.pause();
     }
   });
+  u("#routine_timer #ok").on("click", (ev) => {
+    u("#routine_timer .container").remove();
+    myNS.routine_timer = null;
+    wakeLock.release();
+    wakeLock = null;
+    displayRoutineList();
+});
 
 }
 
