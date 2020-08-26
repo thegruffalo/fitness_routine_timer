@@ -68,29 +68,37 @@ class RoutineTimer {
     let countdownTimerVMs = [];
     routine.sub_routines.forEach((sr) => {
       for (var i = 1; i <= sr.sets; i++) {
-        let set_info = "";
+        let set_detail = "";
         if (sr.sets > 1) {
-          set_info = `{{i}}/{{sets}}`;
+          set_detail = `Set ${i} of ${sr.sets}`;
         }
         if (i == 1 && sr.start_delay > 0) {
-          let timerVM = new CountdownTimerVM(sr.name, "Get ready!", sr.start_delay, 3, set_info);
+          let timerVM = new CountdownTimerVM(sr.name, "Get ready!", sr.start_delay, 3, set_detail);
           countdownTimerVMs.push(timerVM);
         }
         sr.intervals.forEach((i) => {
-          let timerVM = new CountdownTimerVM(sr.name, i.name, i.duration, 3, set_info);
+          let timerVM = new CountdownTimerVM(sr.name, i.name, i.duration, 3, set_detail);
           countdownTimerVMs.push(timerVM);
         });
         if (sr.duration_between_sets > 0 && i < sr.sets) {
-          let timerVM = new CountdownTimerVM(sr.name, "Set complete!", sr.duration_between_sets, 3, set_info);
+          let timerVM = new CountdownTimerVM(sr.name, "Set complete!", sr.duration_between_sets, 3, set_detail);
           countdownTimerVMs.push(timerVM);
         }
       }
       if (i == sr.sets && sr.end_delay > 0) {
-        let timerVM = new CountdownTimerVM(sr.name, "Well done!", sr.end_delay, 3, set_info);
+        let timerVM = new CountdownTimerVM(sr.name, "Well done!", sr.end_delay, 3, set_detail);
         countdownTimerVMs.push(timerVM);
       }
     });
-    this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn, beep);
+    this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn, this.alert_fn);
+  }
+
+  alert_fn = (interval) => {
+    beep();
+    var i = 0;
+    for( i = 1; i < interval.alert_with_time_to_go; i++){
+          window.setTimeout(beep, 1000 * i);
+    }
   }
 
   onTick = () => {
@@ -103,12 +111,11 @@ class RoutineTimer {
       this.interval_timer = undefined;
       this.complete = true;
       this.update_ui_fn();
-
     }
   };
 
   start = async () => {
-    this.interval_timer = window.setInterval(this.onTick, 1000);
+    this.interval_timer = window.setInterval(this.onTick, 250);
     this.last_time = new Date().getTime();
     this.vm.current_index = 0;
     // Request a screen wake lock…

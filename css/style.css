@@ -111,7 +111,21 @@ h1 {
 #interval_current{
   font-size: 1.5rem;
   color: green;
+  font-weight: 700;
 }
-#interval_next{
-  font-size: 1.1rem;
+#coming_up{
+  font-size: 1.5rem;
+  text-align: left;
+}
+.buttons{
+  display: flex;
+  flex-direction: row;
+  align-content: space-around; 
+  width: 100%;
+}
+.buttons a{
+  flex: 1;
+}
+#time_left{
+  font-size: 1.5rem;
 }
