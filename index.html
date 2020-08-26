@@ -85,7 +85,7 @@
   <script id="template_routine_timer_display" type="text/x-handlebars-template">
       <div>
         <div id="total_time">Total time: {{to_time vm.total_duration}}</div>
-        <div id="time_left"><span>Total </span><span>{{to_time vm.time_left}}</span> to go</div>
+        <div id="time_left"><span>{{to_time vm.time_left}}</span> to go</div>
         {{#if paused}}
         <div class="paused">Paused</div>
         {{/if}}

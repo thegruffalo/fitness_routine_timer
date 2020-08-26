@@ -1,13 +1,15 @@
 import { beep } from './sound.js';
 import r1 from './routines/body_weight_1.js';
 import r2 from './routines/body_weight_2.js';
+import t from './routines/test.js';
 import { CountdownTimerVM, RoutineTimerVM } from './view_models.js';
 
 const app_container = document.getElementById("app");
 const myNS = {
   "routines": [
     r1,
-    r2
+    r2,
+    t
   ]
 };
 
@@ -67,7 +69,7 @@ class RoutineTimer {
         countdownTimerVMs.push(timerVM);
       }
     });
-    this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn);
+    this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn, beep);
   }
 
   onTick = () => {

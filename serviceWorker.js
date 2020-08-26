@@ -1,4 +1,4 @@
-const staticFitnessRoutineTimer = "fitness_routine_timer-v1";
+const staticFitnessRoutineTimer = "fitness_routine_timer-v2";
 const assets = [
   "",
   "index.html",
@@ -8,12 +8,9 @@ const assets = [
   "js/umbrella.min.js",
   "js/sound.js",
   "js/view_models.js",
-  "js/routines/models.js",
-  "js/routines/basic_s_and_c.js",
   "js/routines/body_weight_1.js",
   "js/routines/body_weight_2.js",
-  "js/routines/body_weight_3.js",
-  "js/routines/body_weight_4.js",
+  "js/routines/test.js"
 ];
 
 self.addEventListener("install", installEvent => {
