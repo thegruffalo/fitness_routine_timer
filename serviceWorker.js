@@ -1,4 +1,4 @@
-const staticFitnessRoutineTimer = "fitness_routine_timer-v2";
+const staticFitnessRoutineTimer = "fitness_routine_timer-v3";
 const assets = [
   "",
   "index.html",
