@@ -1,24 +1,11 @@
-const staticFitnessRoutineTimer = "fitness_routine_timer-v3";
+const staticFitnessRoutineTimer = "fitness_routine_timer-v4";
 const assets = [
   "",
   "index.html",
   "css/style.css",
-  "js/app.js",
-  "js/handlebars.min-v4.7.6.js",
-  "js/umbrella.min.js",
-  "js/sound.js",
-  "js/view_models.js",
-  "js/routines/body_weight_1.js",
-  "js/routines/week_1_session_1.js",
-  "js/routines/week_1_session_2.js",
-  "js/routines/week_1_session_3.js",
-  "js/routines/week_2_session_1.js",
-  "js/routines/week_2_session_2.js",
-  "js/routines/week_2_session_3.js",
-  "js/routines/week_3_session_1.js",
-  "js/routines/week_3_session_2.js",
-  "js/routines/week_3_session_3.js",
-  "js/routines/test.js"
+  "dist/main.js",
+  "src/js/handlebars.min-v4.7.6.js",
+  "src/js/umbrella.min.js",
 ];
 
 self.addEventListener("install", installEvent => {

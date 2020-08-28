@@ -1,3 +1,5 @@
+import "regenerator-runtime/runtime";
+import 'core-js';
 import { beep } from './sound.js';
 import r1 from './routines/body_weight_1.js';
 import w1s1 from './routines/week_1_session_1.js';
@@ -56,13 +58,12 @@ const requestWakeLock = async () => {
 
 
 class RoutineTimer {
-  routine;
-  interval_timer;
-  last_time = 0;
-  paused = false;
-  complete = false;
-  vm = null;
   constructor(routine, update_ui_fn) {
+    this.interval_timer = 0;
+    this.last_time = 0;
+    this.paused = false;
+    this.complete = false;
+    this.vm = null;
     this.routine = routine;
     this.update_ui_fn = () => update_ui_fn(this);
     let countdownTimerVMs = [];
@@ -93,15 +94,15 @@ class RoutineTimer {
     this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn, this.alert_fn);
   }
 
-  alert_fn = (interval) => {
+  alert_fn(interval){
     beep();
     var i = 0;
     for( i = 1; i < interval.alert_with_time_to_go; i++){
           window.setTimeout(beep, 1000 * i);
     }
-  }
+  };
 
-  onTick = () => {
+  onTick = () =>{
     var now = new Date().getTime();
     var diff = now - this.last_time;
     this.last_time = now;
@@ -117,7 +118,7 @@ class RoutineTimer {
     }
   };
 
-  start = async () => {
+  async start(){
     this.interval_timer = window.setInterval(this.onTick, 250);
     this.last_time = new Date().getTime();
     this.vm.current_index = 0;
@@ -125,14 +126,14 @@ class RoutineTimer {
     await requestWakeLock();
   }
 
-  pause = () => {
+  pause(){
     window.clearInterval(this.interval_timer);
     this.interval_timer = undefined;
     this.paused = true;
     this.update_ui_fn();
   };
 
-  unpause = () => {
+  unpause(){
     this.interval_timer = window.setInterval(this.onTick, 250);
     this.last_time = new Date().getTime();
     this.paused = false;
@@ -249,7 +250,7 @@ document.addEventListener("DOMContentLoaded", onLoaded);
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
-      .register("serviceWorker.js")
+      .register("/serviceWorker.js", {scope:'/'})
       .then(res => console.log("service worker registered"))
       .catch(err => console.log("service worker not registered", err));
   });

@@ -1,0 +1,35 @@
+{
+  "name": "fitness_routine_timer",
+  "version": "1.0.0",
+  "description": "Progressive Web App (PWA) Fitness Routine Timer",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thegruffalo/fitness_routine_timer.git"
+  },
+  "keywords": [
+    "pwa"
+  ],
+  "author": "Tim Hill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thegruffalo/fitness_routine_timer/issues"
+  },
+  "homepage": "https://github.com/thegruffalo/fitness_routine_timer#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/plugin-transform-arrow-functions": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "regenerator-runtime": "^0.13.7"
+  }
+}

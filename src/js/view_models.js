@@ -1,12 +1,5 @@
 
 export class CountdownTimerVM {
-    group_name = "Workout";
-    name = "push ups";
-    duration = 20;
-    time_left_ms = 20000;
-    alert_with_time_to_go = 1;
-    set_detail = "1/2";
-    alerting = false;
     constructor(group_name, name, duration, alert_with_time_to_go, set_detail) {
         this.group_name = group_name;
         this.name = name;
@@ -21,12 +14,6 @@ export class CountdownTimerVM {
     }
 }
 export class RoutineTimerVM {
-    name = "Workout1";
-    countdown_timers = [];
-    total_duration = 0;
-    time_elapsed_ms = 0;
-    current_index = 0;
-    last_time = 0;
     constructor(name, countdown_timers, update_ui_fn, alert_fn) {
         this.name = name;
         this.countdown_timers = countdown_timers || [];
@@ -34,6 +21,8 @@ export class RoutineTimerVM {
         this.current_index = 0;
         this.update_ui_fn = update_ui_fn
         this.alert_fn = alert_fn;
+        this.time_elapsed_ms = 0;
+        this.last_time = 0;
     }
     get time_left() {
         return this.total_duration - Math.floor(this.time_elapsed_ms / 1000);
