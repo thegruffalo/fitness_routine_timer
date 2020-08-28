@@ -4,8 +4,6 @@ const assets = [
   "index.html",
   "css/style.css",
   "dist/main.js",
-  "src/js/handlebars.min-v4.7.6.js",
-  "src/js/umbrella.min.js",
 ];
 
 self.addEventListener("install", installEvent => {

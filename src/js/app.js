@@ -13,6 +13,8 @@ import w3s2 from './routines/week_3_session_2.js';
 import w3s3 from './routines/week_3_session_3.js';
 import t from './routines/test.js';
 import { CountdownTimerVM, RoutineTimerVM } from './view_models.js';
+const Handlebars = require("handlebars");
+import u from 'umbrellajs';
 
 const app_container = document.getElementById("app");
 const myNS = {

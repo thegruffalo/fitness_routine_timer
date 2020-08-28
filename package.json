@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "regenerator-runtime": "^0.13.7"
+    "handlebars": "^4.7.6",
+    "regenerator-runtime": "^0.13.7",
+    "umbrellajs": "^3.2.3"
   }
 }
