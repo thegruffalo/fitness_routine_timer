@@ -1,0 +1,21 @@
+    <div class="container card">
+    <h1>{{name}}</h1>
+    <div class="detail-container">
+    {{#each sub_routines}}
+    <details {{summary_open}}>
+        <summary><span>{{name}}</span>
+        {{#if_gt sets 1}}
+            <span>- x{{sets}}</h1>
+        {{/if_gt}}
+            </summary>
+            {{#each intervals}}
+            <div>{{name}} - {{duration}}s</div>
+            {{/each}}
+    </details>
+    {{/each}}
+</div>
+<div class="buttons">
+    <a class="btn btn-secondary" id="close">Close</a>
+    <a class="btn btn-primary" id="start">Start</a>
+</div>
+</div>

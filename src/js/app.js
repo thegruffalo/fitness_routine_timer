@@ -1,39 +1,19 @@
 import "regenerator-runtime/runtime";
 import 'core-js';
 import { beep } from './sound.js';
-import r1 from './routines/body_weight_1.js';
-import w1s1 from './routines/week_1_session_1.js';
-import w1s2 from './routines/week_1_session_2.js';
-import w1s3 from './routines/week_1_session_3.js';
-import w2s1 from './routines/week_2_session_1.js';
-import w2s2 from './routines/week_2_session_2.js';
-import w2s3 from './routines/week_2_session_3.js';
-import w3s1 from './routines/week_3_session_1.js';
-import w3s2 from './routines/week_3_session_2.js';
-import w3s3 from './routines/week_3_session_3.js';
-import t from './routines/test.js';
+import routines from './routines/routines.js'
 import { CountdownTimerVM, RoutineTimerVM } from './view_models.js';
-const Handlebars = require("handlebars");
 import u from 'umbrellajs';
+const showListOfRoutines = require('../templates/routine_list.handlebars');
+const showRoutineDetail = require("../templates/routine_detail.handlebars");
+const showRoutineTimer = require("../templates/routine_timer.handlebars");
+const showRoutineTimerDisplay = require("../templates/routine_timer_display.handlebars");
 
 const app_container = document.getElementById("app");
 const myNS = {
-  "routines": [
-    r1,
-    w1s1,
-    w1s2,
-    w1s3,
-    w2s1,
-    w2s2,
-    w2s3,
-    w3s1,
-    w3s2,
-    w3s3,
-    t
-  ]
+  "routines": routines
 };
 
-const routines = myNS.routines;
 routines.forEach((r) => {
   r.sub_routines.forEach((sr) => {
     sr.summary_open = (sr.sets > 1) ? "open" : "";
@@ -96,15 +76,15 @@ class RoutineTimer {
     this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn, this.alert_fn);
   }
 
-  alert_fn(interval){
+  alert_fn(interval) {
     beep();
     var i = 0;
-    for( i = 1; i < interval.alert_with_time_to_go; i++){
-          window.setTimeout(beep, 1000 * i);
+    for (i = 1; i < interval.alert_with_time_to_go; i++) {
+      window.setTimeout(beep, 1000 * i);
     }
   };
 
-  onTick = () =>{
+  onTick = () => {
     var now = new Date().getTime();
     var diff = now - this.last_time;
     this.last_time = now;
@@ -114,13 +94,13 @@ class RoutineTimer {
       this.interval_timer = undefined;
       this.complete = true;
       this.update_ui_fn();
-      u("#ok").attr("style","display:inline-block;");
-      u("#pause").attr("style","display:none;");
-      u("#end").attr("style","display:none;");
+      u("#ok").attr("style", "display:inline-block;");
+      u("#pause").attr("style", "display:none;");
+      u("#end").attr("style", "display:none;");
     }
   };
 
-  async start(){
+  async start() {
     this.interval_timer = window.setInterval(this.onTick, 250);
     this.last_time = new Date().getTime();
     this.vm.current_index = 0;
@@ -128,14 +108,14 @@ class RoutineTimer {
     await requestWakeLock();
   }
 
-  pause(){
+  pause() {
     window.clearInterval(this.interval_timer);
     this.interval_timer = undefined;
     this.paused = true;
     this.update_ui_fn();
   };
 
-  unpause(){
+  unpause() {
     this.interval_timer = window.setInterval(this.onTick, 250);
     this.last_time = new Date().getTime();
     this.paused = false;
@@ -148,14 +128,14 @@ const startRoutine = (routine) => {
   u("#routine_detail .container").remove();
 
   myNS.routine_timer = new RoutineTimer(routine, (rt) => {
-    document.getElementById("routine_timer_display").innerHTML = handlebar_functions.showRoutineTimerDisplay(rt,
+    document.getElementById("routine_timer_display").innerHTML = showRoutineTimerDisplay(rt,
       {
         allowProtoPropertiesByDefault: true
       });
   });
   myNS.routine_timer.start();
 
-  document.getElementById("routine_timer").innerHTML = handlebar_functions.showRoutineTimer(routine);
+  document.getElementById("routine_timer").innerHTML = showRoutineTimer(routine);
   u("#routine_timer #end").on("click", (ev) => {
     myNS.routine_timer.pause();
     if (confirm("Are you sure you want to end?")) {
@@ -182,13 +162,13 @@ const startRoutine = (routine) => {
     wakeLock.release();
     wakeLock = null;
     displayRoutineList();
-});
+  });
 
 }
 
 const displayRoutine = (routine) => {
   u("#routine_list .container").remove();
-  document.getElementById("routine_detail").innerHTML = handlebar_functions.showRoutineDetail(routine);
+  document.getElementById("routine_detail").innerHTML = showRoutineDetail(routine);
   u("#routine_detail #close").on("click", (ev) => {
     u("#routine_detail .container").remove();
     displayRoutineList();
@@ -200,7 +180,7 @@ const displayRoutine = (routine) => {
 
 const displayRoutineList = () => {
   u("#routine_list").attr("style", "display:block");
-  document.getElementById("routine_list").innerHTML = handlebar_functions.showListOfRoutines(routines);
+  document.getElementById("routine_list").innerHTML = showListOfRoutines(routines);
   u("#routine_list .card").on("click", (ev) => {
     var itemIndex = u(ev.currentTarget).data("item");
     displayRoutine(routines[itemIndex]);
@@ -208,43 +188,6 @@ const displayRoutineList = () => {
 };
 
 const onLoaded = () => {
-  handlebar_functions = {
-    "showListOfRoutines": Handlebars.compile(document.getElementById("template_routine_list").innerHTML),
-    "showRoutineDetail": Handlebars.compile(document.getElementById("template_routine_detail").innerHTML),
-    "showRoutineTimer": Handlebars.compile(document.getElementById("template_routine_timer").innerHTML),
-    "showRoutineTimerDisplay": Handlebars.compile(document.getElementById("template_routine_timer_display").innerHTML),
-  };
-
-  Handlebars.registerHelper('if_gt', function (a, b, opts) {
-    if (a > b) {
-      return opts.fn(this);
-    } else {
-      return opts.inverse(this);
-    }
-  });
-
-  Handlebars.registerHelper('to_time', function (total_seconds) {
-    var seconds = total_seconds % 60;
-    var total_minutes = Math.floor(total_seconds / 60);
-    var minutes = total_minutes % 60;
-    var hours = Math.floor(total_minutes / 60);
-    var minutes_display = ("00" + String(minutes)).slice(-2);
-    var seconds_display = ("00" + String(seconds)).slice(-2);
-    var formatted = hours > 0 ? `${hours}:` : "";
-    formatted += `${minutes_display}:${seconds_display}`;
-    return formatted;
-  });
-
-  Handlebars.registerHelper('helperMissing', function ( /* dynamic arguments */) {
-    var options = arguments[arguments.length - 1];
-    var args = Array.prototype.slice.call(arguments, 0, arguments.length - 1)
-    return new Handlebars.SafeString("Missing: " + options.name + "(" + args + ")")
-  });
-  Handlebars.registerHelper('blockHelperMissing', function (context, options) {
-    return "Helper '" + options.name + "' not found. "
-      + "Printing block: " + options.fn(context);
-  });
-
   displayRoutineList();
 }
 document.addEventListener("DOMContentLoaded", onLoaded);
@@ -252,7 +195,7 @@ document.addEventListener("DOMContentLoaded", onLoaded);
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
-      .register("/serviceWorker.js", {scope:'/'})
+      .register("serviceWorker.js")
       .then(res => console.log("service worker registered"))
       .catch(err => console.log("service worker not registered", err));
   });

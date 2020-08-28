@@ -11,6 +11,16 @@ module.exports = {
     "devtool": "source-map",
     module: {
         rules: [
+            { 
+                test: /\.handlebars$/, 
+                loader: "handlebars-loader",
+                options: {
+                    precompileOptions: {
+                      knownHelpersOnly: true,
+                      knownHelpers:["to_time","if_gt"]
+                    }
+                }
+            },
             {
                 test: /\.m?js$/,
                 exclude: /(node_modules)/,

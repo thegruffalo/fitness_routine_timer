@@ -1,0 +1,31 @@
+<div>
+<div id="total_time">Total time: {{to_time vm.total_duration}}</div>
+{{#if paused}}
+<div class="paused">Paused</div>
+{{/if}}
+{{#if complete}}
+<div class="complete">Complete</div>
+{{else}}
+    <div id="time_left"><span>{{to_time vm.time_left}}</span> to go</div>
+    {{#with vm}}
+    {{#with current}}
+        <div id="interval_current"><span>{{group_name}}</span><span> - </span><span>{{name}}</span></div>
+        <div id="interval_time_left"><span>{{to_time time_left}}</span></div>
+        <div>{{set_detail}}</div>
+    {{/with}}
+    {{#if_gt coming_up.length 0}}
+        <div id="coming_up"><div>Coming up:</div>
+        <ul>
+        {{#each coming_up}}
+        <li>
+            <span>{{group_name}}</span>
+            <span> - </span>
+            <span>{{name}}</span>
+        </li>
+        {{/each}}
+        </ul>
+        </div>
+    {{/if_gt}}
+    {{/with}}
+{{/if}}
+</div>
