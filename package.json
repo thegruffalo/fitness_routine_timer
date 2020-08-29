@@ -8,7 +8,7 @@
     "build": "webpack --config webpack.prod.js",
     "watch": "webpack --watch --config webpack.dev.js",
     "start": "webpack-dev-server --open --config webpack.dev.js",
-    "serve": "http-server static"
+    "serve": "http-server docs"
   },
   "repository": {
     "type": "git",

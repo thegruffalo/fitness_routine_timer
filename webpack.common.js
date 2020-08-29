@@ -10,7 +10,7 @@ module.exports = {
         app: "./src/js/app.js",
     },
     output: {
-        "path": path.resolve(__dirname, 'static'),
+        "path": path.resolve(__dirname, 'docs'),
         "filename": "[name].[chunkhash:8].js"
     },
     module: {
