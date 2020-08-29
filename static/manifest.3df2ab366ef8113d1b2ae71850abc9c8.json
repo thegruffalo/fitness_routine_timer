@@ -1,0 +1,53 @@
+{
+  "icons": [
+    {
+      "src": "icon_1280x1280.aaa7c0f08288d2cc84897b07f1d7b9b0.png",
+      "sizes": "1280x1280",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon_1024x1024.d29f3ecebaae526a602b8cd3aa0fe542.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_512x512.7a8fafea89a138bbafd66b76acc0539d.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_384x384.81892ff8f3a3fcc98a6c196a09d4f319.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_256x256.f9d1b1a1ebc754e3c392e2b9737e0abb.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_192x192.cb79f25e8a6ad4b84e401ebd88ece51a.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_128x128.0d4fcc02af01b0da3a4951dc22cc103b.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_96x96.4251e3d97afb2a84b74f9dbb67392765.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "name": "Fitness Routine Timer",
+  "short_name": "Fit Timer",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": ".",
+  "description": "Fitness Routine Timer",
+  "background_color": "#fdfdfd",
+  "theme_color": "#db4938"
+}

@@ -8,17 +8,11 @@ const showListOfRoutines = require('../templates/routine_list.handlebars');
 const showRoutineDetail = require("../templates/routine_detail.handlebars");
 const showRoutineTimer = require("../templates/routine_timer.handlebars");
 const showRoutineTimerDisplay = require("../templates/routine_timer_display.handlebars");
-
+import css from '../style.less';
 const app_container = document.getElementById("app");
 const myNS = {
-  "routines": routines
 };
 
-routines.forEach((r) => {
-  r.sub_routines.forEach((sr) => {
-    sr.summary_open = (sr.sets > 1) ? "open" : "";
-  });
-});
 
 var handlebar_functions = {};
 
@@ -179,7 +173,6 @@ const displayRoutine = (routine) => {
 };
 
 const displayRoutineList = () => {
-  u("#routine_list").attr("style", "display:block");
   document.getElementById("routine_list").innerHTML = showListOfRoutines(routines);
   u("#routine_list .card").on("click", (ev) => {
     var itemIndex = u(ev.currentTarget).data("item");
@@ -188,6 +181,13 @@ const displayRoutineList = () => {
 };
 
 const onLoaded = () => {
+
+  routines.forEach((r) => {
+    r.sub_routines.forEach((sr) => {
+      sr.summary_open = (sr.sets > 1) ? "open" : "";
+    });
+  });
+  
   displayRoutineList();
 }
 document.addEventListener("DOMContentLoaded", onLoaded);
@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", onLoaded);
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
-      .register("serviceWorker.js")
+      .register("service-worker.js")
       .then(res => console.log("service worker registered"))
       .catch(err => console.log("service worker not registered", err));
   });
