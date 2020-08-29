@@ -1,3 +1,5 @@
+@import   url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap);
+
 * {
   margin: 0;
   padding: 0;
@@ -6,20 +8,12 @@
 
 body {
   background: #fdfdfd;
-  font-family: "Nunito", sans-serif;
-  font-size: 1rem;
-}
-
-main {
+  font-size: 1.2rem;
   max-width: 900px;
   margin: auto;
   padding: 0.5rem;
   text-align: center;
-}
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-family: 'Roboto', sans-serif;
 }
 
 .detail-container{
@@ -27,7 +21,7 @@ nav {
 }
 
 .detail-container summary{
-  font-size: large;
+  font-size: 1.5rem;
 }
 
 .detail-container details div{
@@ -58,6 +52,18 @@ h1 {
   overflow: hidden;
 }
 
+.button_colour(@base_color:#555){
+	box-shadow: 0px 10px 14px -7px darken(@base_color, 15%);
+	background:linear-gradient(to bottom, @base_color 5%, darken(@base_color, 5%) 100%);
+	background-color:@base_color;
+	text-shadow:0px 1px 0px darken(@base_color, 10%);
+}
+
+.button_colour_hover(@base_color:#555){
+	background:linear-gradient(to bottom, darken(@base_color, 5%) 5%, @base_color 100%);
+	background-color:darken(@base_color, 5%);
+}
+
 .btn{
 	display:inline-block;
 	cursor:pointer;
@@ -66,39 +72,33 @@ h1 {
 	padding:0.5rem 1rem;
 	text-decoration:none;
 	border-radius:0.5rem;
-}
-.btn-secondary {
-	box-shadow: 0px 10px 14px -7px #276873;
-	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
-	background-color:#599bb3;
 	color:#ffffff;
-	text-shadow:0px 1px 0px #3d768a;
 }
-.btn-secondary:hover {
-	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
-	background-color:#408c99;
+.btn-blue {
+  .button_colour(#599bb3);
+  &:hover{
+    .button_colour_hover(#599bb3);
+  }
 }
-.btn-secondary:active {
+.btn:active {
 	position:relative;
 	top:1px;
 }
 
-.btn-primary {
-	box-shadow: 0px 10px 14px -7px #3e7327;
-	background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
-	background-color:#77b55a;
-	border:1px solid #4b8f29;
-	color:#ffffff;
-	text-shadow:0px 1px 0px #5b8a3c;
+.btn-green {
+  .button_colour(#77b55a);
+  &:hover{
+    .button_colour_hover(#77b55a);
+  }
 }
-.btn-primary:hover {
-	background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
-	background-color:#72b352;
+
+.btn-red {
+  .button_colour(#d5575a);
+  &:hover{
+    .button_colour_hover(#d5575a);
+  }
 }
-.btn-primary:active {
-	position:relative;
-	top:1px;
-}
+
 .paused{
   font-size: 4rem;
   color: red;
