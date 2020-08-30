@@ -83,7 +83,7 @@ module.exports = {
                 "theme-color": "#db4938"
             },
             appMountId: 'app',
-            appMountHtmlSnippet: '<h1>Fitness Routine Timer</h1><div id="routine_list"></div><div id="routine_detail"></div><div id="routine_timer"></div>',
+            appMountHtmlSnippet: '<h1>Fitness Routine Timer</h1><div id="routine_list"></div><div id="routine_detail"></div><div id="routine_timer"></div><footer>[AIV]Version {version}, {date}[/AIV]</footer>',
         }),
         new CssMinimizerPlugin(),
         new WorkboxPlugin.GenerateSW({

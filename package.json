@@ -1,54 +1,55 @@
 {
-  "name": "fitness_routine_timer",
-  "version": "1.0.0",
-  "description": "Progressive Web App (PWA) Fitness Routine Timer",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.prod.js",
-    "watch": "webpack --watch --config webpack.dev.js",
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "serve": "http-server docs"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thegruffalo/fitness_routine_timer.git"
-  },
-  "keywords": [
-    "pwa"
-  ],
-  "author": "Tim Hill",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/thegruffalo/fitness_routine_timer/issues"
-  },
-  "homepage": "https://github.com/thegruffalo/fitness_routine_timer#readme",
-  "devDependencies": {
-    "@babel/core": "^7.11.4",
-    "@babel/plugin-transform-arrow-functions": "^7.10.4",
-    "@babel/preset-env": "^7.11.0",
-    "babel-loader": "^8.1.0",
-    "clean-webpack-plugin": "^3.0.0",
-    "css-loader": "^4.2.2",
-    "css-minimizer-webpack-plugin": "^1.1.2",
-    "html-webpack-plugin": "^4.3.0",
-    "html-webpack-template": "^6.2.0",
-    "http-server": "^0.12.3",
-    "less": "^3.12.2",
-    "less-loader": "^7.0.0",
-    "style-loader": "^1.2.1",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^5.1.2",
-    "webpack-pwa-manifest": "^4.2.0",
-    "workbox-webpack-plugin": "^5.1.3"
-  },
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "handlebars": "^4.7.6",
-    "handlebars-loader": "^1.7.1",
-    "regenerator-runtime": "^0.13.7",
-    "umbrellajs": "^3.2.3"
-  }
+    "name": "fitness_routine_timer",
+    "version": "1.0.1",
+    "description": "Progressive Web App (PWA) Fitness Routine Timer",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --config webpack.prod.js --env.patch",
+        "watch": "webpack --watch --config webpack.dev.js",
+        "start": "webpack-dev-server --open --config webpack.dev.js",
+        "serve": "http-server docs"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/thegruffalo/fitness_routine_timer.git"
+    },
+    "keywords": [
+        "pwa"
+    ],
+    "author": "Tim Hill",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/thegruffalo/fitness_routine_timer/issues"
+    },
+    "homepage": "https://github.com/thegruffalo/fitness_routine_timer#readme",
+    "devDependencies": {
+        "@babel/core": "^7.11.4",
+        "@babel/plugin-transform-arrow-functions": "^7.10.4",
+        "@babel/preset-env": "^7.11.0",
+        "babel-loader": "^8.1.0",
+        "clean-webpack-plugin": "^3.0.0",
+        "css-loader": "^4.2.2",
+        "css-minimizer-webpack-plugin": "^1.1.2",
+        "html-webpack-plugin": "^4.3.0",
+        "html-webpack-template": "^6.2.0",
+        "http-server": "^0.12.3",
+        "less": "^3.12.2",
+        "less-loader": "^7.0.0",
+        "style-loader": "^1.2.1",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.0",
+        "webpack-merge": "^5.1.2",
+        "webpack-pwa-manifest": "^4.2.0",
+        "workbox-webpack-plugin": "^5.1.3"
+    },
+    "dependencies": {
+        "core-js": "^3.6.5",
+        "handlebars": "^4.7.6",
+        "handlebars-loader": "^1.7.1",
+        "regenerator-runtime": "^0.13.7",
+        "umbrellajs": "^3.2.3",
+        "webpack-auto-inject-version": "^1.2.2"
+    }
 }

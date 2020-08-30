@@ -16,8 +16,26 @@ Supports repeating a SubRountine - i.e. sets
 Allows you to see what is coming up as well as what you should be doing.
 With 3 seconds to go alerts you that this interval is coming to an end.
 
+## Deployment
+On checkin, github actions are used to build the PWA.
+The PWA is hosted by github pages, which means checking the built software in to github!
+See the github action for details on how this works.
+
+## Development
+Steps:
+* `git clone`
+* `npm install`
+
+For a production build 
+* `npm run build`
+* `npm run serve`
+* Open browser on localhost:8080
+
+For a dev build
+* `npm run start` Auto opens default browser
+
 ## Next steps
 
-* Use GitHub actions to build this.
+* ~~Use GitHub actions to build this.~~
 * Introduce sets of routines
 * Figure out why sound doesn't work on Safari, and alternative approach for it.
