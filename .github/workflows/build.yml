@@ -9,23 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: actions/checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
       - name: actions/setup-node
-        uses: actions/setup-node@v1.4.1
+        uses: actions/setup-node@v1.4.3
         with:
-          node-version: "13.9.0"
+          node-version: "12"
       - run: npm install
       - run: npm run build
       - name: Commit files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+      - uses: actions/checkout@v2
+      - run: |
+          date > docs/updated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add -f docs/*
           git commit -m "Add built assets"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          git push
