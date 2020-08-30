@@ -16,14 +16,16 @@ jobs:
         uses: actions/setup-node@v1.4.3
         with:
           node-version: "12"
-      - run: npm install
-      - run: npm run build
+      - name: Setup Environment
+        run: npm install
+      - name: Build
+        run: npm run build
       - name: Commit files
-      - uses: actions/checkout@v2
-      - run: |
+#        uses: actions/checkout@v2
+        run: |
           date > docs/updated.txt
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add -f docs/*
+          git add -f docs/**
           git commit -m "Add built assets"
           git push
