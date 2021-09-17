@@ -1,6 +1,6 @@
 export default
 {
-    "name": "Fitness Snack",
+    "name": "Fitness Snack with weights",
     "sub_routines": [
         {
             "name": "Workout",
@@ -11,7 +11,7 @@ export default
                 },
                 {
                     "name": "Rest",
-                    "duration": 10
+                    "duration": 8
                 },
                 {
                     "name": "Crunches",
@@ -19,7 +19,7 @@ export default
                 },
                 {
                     "name": "Rest",
-                    "duration": 10
+                    "duration": 12
                 },
                 {
                     "name": "Bicep Curl",
@@ -27,7 +27,7 @@ export default
                 },
                 {
                     "name": "Rest",
-                    "duration": 10
+                    "duration": 5
                 },
                 {
                     "name": "Shoulder shrugs",
@@ -59,7 +59,7 @@ export default
                 },
                 {
                     "name": "Rest",
-                    "duration": 10
+                    "duration": 5
                 },
                 {
                     "name": "Plank Left",
@@ -75,7 +75,7 @@ export default
                 },
                 {
                     "name": "Rest",
-                    "duration": 10
+                    "duration": 5
                 },
                 {
                     "name": "Push ups",
