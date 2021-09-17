@@ -1,36 +1,12 @@
 export default
 {
-    "name": "Fitness Snack",
+    "name": "Fitness Snack bodyweight",
     "sub_routines": [
         {
             "name": "Workout",
             "intervals": [
                 {
-                    "name": "Push up w Rotation",
-                    "duration": 30
-                },
-                {
-                    "name": "Rest",
-                    "duration": 10
-                },
-                {
                     "name": "Crunches",
-                    "duration": 30
-                },
-                {
-                    "name": "Rest",
-                    "duration": 10
-                },
-                {
-                    "name": "Bicep Curl",
-                    "duration": 30
-                },
-                {
-                    "name": "Rest",
-                    "duration": 10
-                },
-                {
-                    "name": "Shoulder shrugs",
                     "duration": 30
                 },
                 {
@@ -59,7 +35,7 @@ export default
                 },
                 {
                     "name": "Rest",
-                    "duration": 10
+                    "duration": 5
                 },
                 {
                     "name": "Plank Left",
@@ -75,23 +51,15 @@ export default
                 },
                 {
                     "name": "Rest",
-                    "duration": 10
+                    "duration": 5
                 },
                 {
                     "name": "Push ups",
                     "duration": 30
-                },
-                {
-                    "name": "Rest",
-                    "duration": 10
-                },
-                {
-                    "name": "Step ups",
-                    "duration": 30
                 }
             ],
-            "sets": 1,
-            "duration_between_sets": 0,
+            "sets": 2,
+            "duration_between_sets": 10,
             "start_delay": 5,
             "end_delay": 0
         }
