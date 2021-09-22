@@ -1,6 +1,6 @@
 export default
 {
-    "name": "Fitness Snack bodyweight",
+    "name": "Snack bodyweight",
     "sub_routines": [
         {
             "name": "Workout",
@@ -43,7 +43,7 @@ export default
                 },
                 {
                     "name": "Rest",
-                    "duration": 10
+                    "duration": 5
                 },
                 {
                     "name": "Plank Right",
