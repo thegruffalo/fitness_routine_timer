@@ -25,7 +25,7 @@
     "homepage": "https://github.com/thegruffalo/fitness_routine_timer#readme",
     "devDependencies": {
         "@babel/core": "^7.17.10",
-        "@babel/plugin-transform-arrow-functions": "^7.16.7",
+        "@babel/plugin-transform-arrow-functions": "^7.17.12",
         "@babel/preset-env": "^7.17.10",
         "babel-loader": "^8.2.4",
         "clean-webpack-plugin": "^4.0.0",
@@ -45,7 +45,7 @@
         "workbox-webpack-plugin": "^6.5.3"
     },
     "dependencies": {
-        "core-js": "^3.22.4",
+        "core-js": "^3.22.6",
         "handlebars": "^4.7.7",
         "handlebars-loader": "^1.7.1",
         "regenerator-runtime": "^0.13.9",
