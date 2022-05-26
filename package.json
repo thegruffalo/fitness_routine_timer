@@ -35,7 +35,7 @@
         "html-webpack-template": "^6.2.0",
         "http-server": "^14.1.0",
         "less": "^4.1.2",
-        "less-loader": "^10.2.0",
+        "less-loader": "^11.0.0",
         "style-loader": "^3.3.1",
         "webpack": "^5.72.1",
         "webpack-cli": "^4.9.2",
