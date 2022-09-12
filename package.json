@@ -24,7 +24,7 @@
     },
     "homepage": "https://github.com/thegruffalo/fitness_routine_timer#readme",
     "devDependencies": {
-        "@babel/core": "^7.18.2",
+        "@babel/core": "^7.19.0",
         "@babel/plugin-transform-arrow-functions": "^7.17.12",
         "@babel/preset-env": "^7.18.2",
         "babel-loader": "^8.2.5",
