@@ -291,6 +291,41 @@ const onLoaded = () => {
 }
 document.addEventListener("DOMContentLoaded", onLoaded);
 
+// Make the app title clickable to always return to the routines list
+const appTitle = document.getElementById('appTitle');
+if (appTitle) {
+  appTitle.style.cursor = 'pointer';
+  appTitle.addEventListener('click', (ev) => {
+    try {
+      if (myNS.routine_timer) {
+        // Mirror the behavior of the #end button: pause, confirm, then cleanup or unpause
+        myNS.routine_timer.pause();
+        if (confirm("Are you sure you want to end?")) {
+          u("#routine_timer .container").remove();
+          myNS.routine_timer = null;
+          if (wakeLock) {
+            try { wakeLock.release(); } catch (e) { /* ignore */ }
+            wakeLock = null;
+          }
+          u("#routine_detail .container").remove();
+          displayRoutineList();
+          return;
+        } else {
+          myNS.routine_timer.unpause();
+          return;
+        }
+      }
+    } catch (e) {
+      console.error('Error handling title click while timer running', e);
+    }
+
+    // No routine running: clear detail and timer views and show list
+    u("#routine_detail .container").remove();
+    u("#routine_timer .container").remove();
+    displayRoutineList();
+  });
+}
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
