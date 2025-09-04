@@ -20,39 +20,8 @@ Handlebars.registerHelper('log', function(something) {
 
 // No longer using eq or not helpers
 
-// Register the groupBy helper
-Handlebars.registerHelper('groupBy', function(array, property) {
-  // Support items belonging to multiple groups via an array property (e.g. 'groups')
-  const grouped = array.reduce((acc, obj) => {
-    // If the property is an array, add the object to each group
-    const prop = obj[property];
-    if (Array.isArray(prop)) {
-      prop.forEach((g) => {
-        if (!acc[g]) acc[g] = [];
-        acc[g].push({...obj});
-      });
-    } else {
-      const key = prop || 'Ungrouped';
-      if (!acc[key]) acc[key] = [];
-      acc[key].push({...obj});
-    }
-    return acc;
-  }, {});
-
-  // Convert to array of group objects. Use groupOrder to place preferred groups first,
-  // then fall back to alphabetical ordering for the rest.
-  const entries = Object.entries(grouped);
-  entries.sort(([a], [b]) => {
-    const ai = groupOrder.indexOf(a);
-    const bi = groupOrder.indexOf(b);
-    if (ai !== -1 || bi !== -1) {
-      return (ai === -1 ? Infinity : ai) - (bi === -1 ? Infinity : bi);
-    }
-    return a.localeCompare(b);
-  });
-
-  return entries.map(([groupName, items]) => ({ groupName, items }));
-});
+// groupBy helper removed — groups are now provided by the routines module and templates
+// iterate groups directly. If a helper is needed later, reintroduce a focused helper.
 const app_container = document.getElementById("app");
 const myNS = {
 };
