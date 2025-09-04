@@ -5,6 +5,7 @@ import groupsFromModule from './routines/routines.js'
 // The module now exports groups (default). Use the array order as the display order.
 const groupOrder = (groupsFromModule || []).map(g => g.name);
 import { CountdownTimerVM, RoutineTimerVM } from './view_models.js';
+import { recordRoutineStart, updateRoutineCompletion } from './storage.js';
 import u from 'umbrellajs';
 const Handlebars = require('handlebars/runtime');
 const showListOfRoutines = require('../templates/routine_list.handlebars');
@@ -54,6 +55,7 @@ class RoutineTimer {
     this.complete = false;
     this.vm = null;
     this.routine = routine;
+    this.sessionId = null; // Track the session for storage
     this.update_ui_fn = () => update_ui_fn(this);
     let countdownTimerVMs = [];
     routine.sub_routines.forEach((sr) => {
@@ -82,6 +84,10 @@ class RoutineTimer {
       }
     });
     this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn, this.end_alert_fn);
+    
+    // Record routine start in storage after VM is created
+    this.sessionId = recordRoutineStart(this.routine.name, this.vm.total_duration);
+    this.vm.sessionId = this.sessionId; // Set the sessionId on the VM
   }
 
   end_alert_fn(interval) {
@@ -101,6 +107,13 @@ class RoutineTimer {
       window.clearInterval(this.interval_timer);
       this.interval_timer = undefined;
       this.complete = true;
+      
+      // Record routine completion - naturally finished
+      if (this.sessionId) {
+        const timeSpentSeconds = Math.floor(this.vm.time_elapsed_ms / 1000);
+        updateRoutineCompletion(this.sessionId, timeSpentSeconds, true);
+      }
+      
       this.update_ui_fn();
       u("#ok").attr("style", "display:inline-block;");
       u("#pause").attr("style", "display:none;");
@@ -130,6 +143,14 @@ class RoutineTimer {
     this.update_ui_fn();
   };
 
+  // Record routine completion when ending early
+  recordEarlyTermination() {
+    if (this.sessionId && !this.complete) {
+      const timeSpentSeconds = Math.floor(this.vm.time_elapsed_ms / 1000);
+      updateRoutineCompletion(this.sessionId, timeSpentSeconds, false);
+    }
+  };
+
 }
 
 const startRoutine = (routine) => {
@@ -147,6 +168,9 @@ const startRoutine = (routine) => {
   u("#routine_timer #end").on("click", (ev) => {
     myNS.routine_timer.pause();
     if (confirm("Are you sure you want to end?")) {
+      // Record early termination before cleanup
+      myNS.routine_timer.recordEarlyTermination();
+      
       u("#routine_timer .container").remove();
       myNS.routine_timer = null;
       wakeLock.release();
@@ -303,6 +327,9 @@ if (appTitle) {
         // Mirror the behavior of the #end button: pause, confirm, then cleanup or unpause
         myNS.routine_timer.pause();
         if (confirm("Are you sure you want to end?")) {
+          // Record early termination before cleanup
+          myNS.routine_timer.recordEarlyTermination();
+          
           u("#routine_timer .container").remove();
           myNS.routine_timer = null;
           if (wakeLock) {
