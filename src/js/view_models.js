@@ -39,7 +39,7 @@ export class RoutineTimerVM {
     get coming_up() {
         var i;
         var coming_up = [];
-        for( i = this.current_index + 1; i <= Math.min(this.current_index + 3, this.countdown_timers.length -1); i++){
+    for( i = this.current_index + 1; i <= Math.min(this.current_index + 4, this.countdown_timers.length -1); i++){
             coming_up.push(this.countdown_timers[i]);
         }
         return coming_up;
