@@ -1,130 +1,375 @@
-@import   url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #5B21B6;
+  --primary-dark: #4C1D95;
+  --success: #059669;
+  --danger: #E11D48;
+  --warning: #F59E0B;
+  --background: #F8FAFC;
+  --text: #0F172A;
+  --text-light: #64748B;
+  --card-bg: #FFFFFF;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  -webkit-tap-highlight-color: transparent;
+}
+
+// Improve touch targets
+button, 
+a.btn, 
+summary {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 body {
-  background: #fdfdfd;
-  font-size: 1.2rem;
+  background: var(--background);
+  font-size: 16px;
   max-width: 900px;
   margin: auto;
-  padding: 0.5rem;
+  padding: 1rem;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  line-height: 1.5;
 }
 
-.detail-container{
+.detail-container {
   text-align: left;
-}
-
-.detail-container summary{
-  font-size: 1.5rem;
-}
-
-.detail-container details div{
-  margin-left: 1rem;
+  margin: 1rem 0;
+  
+  summary {
+    font-size: 1.25rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.75rem;
+    background: var(--card-bg);
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow-sm);
+    
+    &:hover {
+      background: #F3F4F6;
+    }
+  }
+  
+  details div {
+    margin: 0.75rem 1rem;
+    padding: 0.5rem;
+    border-left: 2px solid var(--primary);
+  }
 }
 
 h1 {
-  color: #e74c3c;
-  margin: 0.5rem;
+  color: var(--primary);
+  margin: 1rem 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
+
 .container {
   display: grid;
   grid-template-rows: repeat(auto-fit, minmax(5rem, 1fr));
-  grid-gap: 1rem;
+  grid-gap: 1.5rem;
   justify-content: center;
   align-items: center;
-  margin: auto;
-  padding: 1rem 0;
+  margin: 1.5rem auto;
 }
+
 .card {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background: #fff;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  border-radius: 1rem;
   margin: auto;
   overflow: hidden;
-}
-
-.button_colour(@base_color:#555){
-	box-shadow: 0px 10px 14px -7px darken(@base_color, 15%);
-	background:linear-gradient(to bottom, @base_color 5%, darken(@base_color, 5%) 100%);
-	background-color:@base_color;
-	text-shadow:0px 1px 0px darken(@base_color, 10%);
-}
-
-.button_colour_hover(@base_color:#555){
-	background:linear-gradient(to bottom, darken(@base_color, 5%) 5%, @base_color 100%);
-	background-color:darken(@base_color, 5%);
-}
-
-.btn{
-	display:inline-block;
-	cursor:pointer;
-	font-size:1.8rem;
-	font-weight:bold;
-	padding:0.5rem 1rem;
-	text-decoration:none;
-	border-radius:0.5rem;
-	color:#ffffff;
-}
-.btn-blue {
-  .button_colour(#599bb3);
-  &:hover{
-    .button_colour_hover(#599bb3);
+  padding: 1.5rem;
+  width: 100%;
+  
+  &:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
   }
 }
-.btn:active {
-	position:relative;
-	top:1px;
+
+.btn {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1.125rem;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: none;
+  color: white;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+    filter: brightness(0.95);
+  }
+  
+  &:active {
+    transform: translateY(1px);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+.btn-blue {
+  background: var(--primary);
 }
 
 .btn-green {
-  .button_colour(#77b55a);
-  &:hover{
-    .button_colour_hover(#77b55a);
-  }
+  background: var(--success);
 }
 
 .btn-red {
-  .button_colour(#d5575a);
-  &:hover{
-    .button_colour_hover(#d5575a);
+  background: var(--danger);
+}
+
+.paused {
+  font-size: 3rem;
+  color: var(--danger);
+  font-weight: 700;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+#interval_time_left {
+  font-size: 4rem;
+  color: var(--success);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.05em;
+  margin: 1rem 0;
+}
+
+#interval_current {
+  font-size: 1.5rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+#coming_up {
+  font-size: 1.125rem;
+  text-align: left;
+  color: var(--text-light);
+  padding: 1rem;
+  background: #F3F4F6;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  margin: 1rem 0;
+  
+  a {
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
   }
 }
 
-.paused{
-  font-size: 4rem;
-  color: red;
+#time_left {
+  font-size: 1.25rem;
+  color: var(--text-light);
+  margin-top: 0.5rem;
 }
-#interval_time_left{
-  font-size: 3rem;
-  color: green;
+
+// Pixel 8 and similar sized devices optimization
+@media (max-width: 393px) {
+  body {
+    font-size: 14px;
+    padding: 0.5rem 0.25rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    margin: 0.5rem 0;
+  }
+
+  .detail-container {
+    margin: 0.5rem 0;
+
+    summary {
+      font-size: 1.125rem;
+      padding: 0.5rem;
+    }
+
+    details div {
+      margin: 0.5rem;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+
+  .card {
+    padding: 1rem;
+    border-radius: 0.75rem;
+  }
+
+  .buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+    
+    a {
+      flex: 1 1 calc(50% - 0.25rem);
+      min-width: 0;
+      max-width: none;
+    }
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  #interval_time_left {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+  }
+
+  #interval_current {
+    font-size: 1.25rem;
+    margin: 0.25rem 0;
+  }
+
+  #coming_up {
+    font-size: 1rem;
+    padding: 0.75rem;
+    margin: 0.5rem;
+  }
+
+  #time_left {
+    font-size: 1rem;
+  }
+
+  .paused {
+    font-size: 2rem;
+  }
 }
-#interval_current{
-  font-size: 1.5rem;
-  color: green;
-  font-weight: 700;
+
+// Slightly larger phones
+@media (min-width: 394px) and (max-width: 640px) {
+  body {
+    font-size: 14px;
+    padding: 0.5rem;
+  }
+  
+  .buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    
+    a {
+      flex: 1 1 calc(50% - 0.375rem);
+      min-width: 0;
+      max-width: none;
+    }
+  }
+  
+  #interval_time_left {
+    font-size: 3rem;
+  }
 }
-#coming_up{
-  font-size: 1.5rem;
-  text-align: left;
+
+// Portrait orientation optimizations
+@media (orientation: portrait) and (max-height: 852px) {
+  .container {
+    grid-gap: 1rem;
+    margin: 1rem auto;
+  }
+
+  .card {
+    margin-bottom: 0.5rem;
+  }
+
+  #coming_up {
+    max-height: 25vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--text-light);
+      border-radius: 2px;
+    }
+  }
 }
-.buttons{
-  display: flex;
-  flex-direction: row;
-  align-content: space-around; 
-  width: 100%;
+
+// Add smooth animation for details elements
+details[open] summary ~ * {
+  animation: sweep .3s ease-in-out;
 }
-.buttons a{
-  flex: 1;
+
+@keyframes sweep {
+  0%    {opacity: 0; transform: translateY(-10px)}
+  100%  {opacity: 1; transform: translateY(0)}
 }
-#time_left{
-  font-size: 1.5rem;
+
+// Focus styles for accessibility
+:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+// Loading state animations
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.2),
+      transparent
+    );
+    animation: loading 1.5s infinite;
+  }
+}
+
+@keyframes loading {
+  0% { transform: translateX(-100%) }
+  100% { transform: translateX(100%) }
 }
