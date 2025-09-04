@@ -26,43 +26,61 @@ import test from './test.js';
 import splitTest from './split_test.js';
 
 // Group definitions
-const quickWorkouts = [
-  { ...snackWeights, group: 'Quick Workouts' },
-  { ...snackBodyweight, group: 'Quick Workouts' }
-];
-
-const progressivePrograms = [
-  { ...w1s1, group: 'Progressive Programs', week: 1, session: 1 },
-  { ...w1s2, group: 'Progressive Programs', week: 1, session: 2 },
-  { ...w1s3, group: 'Progressive Programs', week: 1, session: 3 },
-  { ...w2s1, group: 'Progressive Programs', week: 2, session: 1 },
-  { ...w2s2, group: 'Progressive Programs', week: 2, session: 2 },
-  { ...w2s3, group: 'Progressive Programs', week: 2, session: 3 },
-  { ...w3s1, group: 'Progressive Programs', week: 3, session: 1 },
-  { ...w3s2, group: 'Progressive Programs', week: 3, session: 2 },
-  { ...w3s3, group: 'Progressive Programs', week: 3, session: 3 }
-];
-
-const bodyWeightRoutines = [
-  { ...bodyWeight, group: 'Body Weight Routines' }
-];
-
-const rehabAndStrength = [
-  { ...kneeRehab, group: 'Rehabilitation & Strength' },
-  { ...legStrength, group: 'Rehabilitation & Strength' },
-  { ...hipMobility, group: 'Rehabilitation & Strength' }
-];
-
-const development = [
-  { ...test, group: 'Development' },
-  { ...splitTest, group: 'Development' }
-];
-
-// Export all routines with their group information
+// Define groups, their preferred order and the routines that belong to each.
+// Routines may appear in multiple groups.
 export default [
-  ...quickWorkouts,
-  ...progressivePrograms,
-  ...bodyWeightRoutines,
-  ...rehabAndStrength,
-  ...development
+  {
+    name: 'Common Routines',
+    // lower order means appear earlier on the UI
+    routines: [
+      // Common set (explicit allocation)
+      kneeRehab,
+      hipMobility,
+      legStrength,
+      w1s1
+    ]
+  },
+  {
+    name: 'Quick Workouts',
+    routines: [
+      snackWeights,
+      snackBodyweight
+    ]
+  },
+  {
+    name: 'Body Weight Routines',
+    routines: [
+      bodyWeight
+    ]
+  },
+  {
+    name: 'Progressive Programs',
+    routines: [
+      w1s1,
+      w1s2,
+      w1s3,
+      w2s1,
+      w2s2,
+      w2s3,
+      w3s1,
+      w3s2,
+      w3s3
+    ]
+  },
+  {
+    name: 'Rehabilitation & Strength',
+    routines: [
+      kneeRehab,
+      legStrength,
+      hipMobility
+    ]
+  },
+  {
+    name: 'Development',
+    routines: [
+      test,
+      splitTest
+    ]
+  }
 ];
+

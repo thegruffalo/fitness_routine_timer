@@ -1,6 +1,6 @@
 export default {
     "name": "Split Test",
-    "group": "Test",
+    "groups": ["Test"],
     "sub_routines": [
         {
             "name": "Split Testing",

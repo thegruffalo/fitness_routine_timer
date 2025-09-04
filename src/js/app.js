@@ -1,7 +1,9 @@
 import "regenerator-runtime/runtime";
 import 'core-js';
 import { beep } from './sound.js';
-import routines from './routines/routines.js'
+import groupsFromModule from './routines/routines.js'
+// The module now exports groups (default). Use the array order as the display order.
+const groupOrder = (groupsFromModule || []).map(g => g.name);
 import { CountdownTimerVM, RoutineTimerVM } from './view_models.js';
 import u from 'umbrellajs';
 const Handlebars = require('handlebars/runtime');
@@ -20,27 +22,36 @@ Handlebars.registerHelper('log', function(something) {
 
 // Register the groupBy helper
 Handlebars.registerHelper('groupBy', function(array, property) {
-    console.log('Grouping array:', array);
-    console.log('By property:', property);
-    
-    const grouped = array.reduce((acc, obj) => {
-        const key = obj[property] || 'Ungrouped';  // Use 'Ungrouped' if property is undefined
-        if (!acc[key]) {
-            acc[key] = [];
-        }
-        acc[key].push({...obj}); // Make a copy of the object
-        return acc;
-    }, {});
+  // Support items belonging to multiple groups via an array property (e.g. 'groups')
+  const grouped = array.reduce((acc, obj) => {
+    // If the property is an array, add the object to each group
+    const prop = obj[property];
+    if (Array.isArray(prop)) {
+      prop.forEach((g) => {
+        if (!acc[g]) acc[g] = [];
+        acc[g].push({...obj});
+      });
+    } else {
+      const key = prop || 'Ungrouped';
+      if (!acc[key]) acc[key] = [];
+      acc[key].push({...obj});
+    }
+    return acc;
+  }, {});
 
-    console.log('Grouped result:', grouped);
-    
-    // Convert to array of group objects, sorted alphabetically
-    return Object.entries(grouped)
-        .sort(([a], [b]) => a.localeCompare(b))
-        .map(([groupName, items]) => ({
-            groupName,
-            items
-        }));
+  // Convert to array of group objects. Use groupOrder to place preferred groups first,
+  // then fall back to alphabetical ordering for the rest.
+  const entries = Object.entries(grouped);
+  entries.sort(([a], [b]) => {
+    const ai = groupOrder.indexOf(a);
+    const bi = groupOrder.indexOf(b);
+    if (ai !== -1 || bi !== -1) {
+      return (ai === -1 ? Infinity : ai) - (bi === -1 ? Infinity : bi);
+    }
+    return a.localeCompare(b);
+  });
+
+  return entries.map(([groupName, items]) => ({ groupName, items }));
 });
 const app_container = document.getElementById("app");
 const myNS = {
@@ -82,21 +93,22 @@ class RoutineTimer {
         if (sr.sets > 1) {
           set_detail = `Set ${i} of ${sr.sets}`;
         }
+        const routineGroupName = (Array.isArray(routine.groups) && routine.groups.length > 0) ? routine.groups[0] : routine.group || routine.name;
         if (i == 1 && sr.start_delay > 0) {
-          let timerVM = new CountdownTimerVM(routine.group || routine.name, "Get ready!", sr.start_delay, 3, set_detail);
+          let timerVM = new CountdownTimerVM(routineGroupName, "Get ready!", sr.start_delay, 3, set_detail);
           countdownTimerVMs.push(timerVM);
         }
         sr.intervals.forEach((i) => {
-          let timerVM = new CountdownTimerVM(routine.group || routine.name, i.name, i.duration, 3, set_detail, i.split);
+          let timerVM = new CountdownTimerVM(routineGroupName, i.name, i.duration, 3, set_detail, i.split);
           countdownTimerVMs.push(timerVM);
         });
         if (sr.duration_between_sets > 0 && i < sr.sets) {
-          let timerVM = new CountdownTimerVM(routine.group || routine.name, "Set complete!", sr.duration_between_sets, 3, set_detail);
+          let timerVM = new CountdownTimerVM(routineGroupName, "Set complete!", sr.duration_between_sets, 3, set_detail);
           countdownTimerVMs.push(timerVM);
         }
       }
       if (i == sr.sets && sr.end_delay > 0) {
-        let timerVM = new CountdownTimerVM(routine.group || routine.name, "Well done!", sr.end_delay, 3, set_detail);
+        let timerVM = new CountdownTimerVM(routineGroupName, "Well done!", sr.end_delay, 3, set_detail);
         countdownTimerVMs.push(timerVM);
       }
     });
@@ -256,24 +268,43 @@ const displayRoutine = (routine) => {
   });
 };
 
+// Build a flat list of routines for lookups while the UI renders groups
+const flatRoutines = (() => {
+  const map = new Map();
+  (groupsFromModule || []).forEach((g) => {
+    (g.routines || []).forEach((r) => {
+      if (!map.has(r.name)) {
+        // clone the routine and attach groups array so rest of app can rely on it
+        map.set(r.name, Object.assign({}, r, { groups: [g.name] }));
+      } else {
+        const existing = map.get(r.name);
+        if (!existing.groups) existing.groups = [];
+        if (!existing.groups.includes(g.name)) existing.groups.push(g.name);
+      }
+    });
+  });
+  return Array.from(map.values());
+})();
+
 const displayRoutineList = () => {
-  document.getElementById("routine_list").innerHTML = showListOfRoutines(routines);
+  // Pass groups (default export) directly to template
+  document.getElementById("routine_list").innerHTML = showListOfRoutines(groupsFromModule);
   u("#routine_list .card").on("click", (ev) => {
     const card = u(ev.currentTarget);
     const cardName = card.find('h1').text().trim();
-    
+
     // For progressive program cards, parse week and session
     const weekMatch = cardName.match(/Week (\d+) - Session (\d+)/);
     let routine;
-    
+
     if (weekMatch) {
       const week = parseInt(weekMatch[1]);
       const session = parseInt(weekMatch[2]);
-      routine = routines.find(r => r.week === week && r.session === session);
+      routine = flatRoutines.find(r => r.week === week && r.session === session);
     } else {
-      routine = routines.find(r => r.name === cardName);
+      routine = flatRoutines.find(r => r.name === cardName);
     }
-    
+
     if (routine) {
       displayRoutine(routine);
     }
@@ -281,8 +312,7 @@ const displayRoutineList = () => {
 };
 
 const onLoaded = () => {
-
-  routines.forEach((r) => {
+  flatRoutines.forEach((r) => {
     r.sub_routines.forEach((sr) => {
       sr.summary_open = (sr.sets > 1) ? "open" : "";
     });
