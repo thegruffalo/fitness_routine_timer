@@ -1,14 +1,10 @@
 {{log this}}
-{{#each (groupBy this "groups")}}
-  {{log "Group:"}}
-  {{log this}}
+{{#each this}}
   <div class="group-header">
-    <h2>{{groupName}}</h2>
+    <h2>{{name}}</h2>
   </div>
   <div class="container">
-    {{#each items}}
-      {{log "Item in group:"}}
-      {{log this}}
+    {{#each routines}}
       <div data-item="{{@../index}}-{{@index}}" class="card">
         {{#if week}}
           <h1>Week {{week}} - Session {{session}}</h1>
