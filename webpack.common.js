@@ -42,7 +42,7 @@ module.exports = {
                             }]
                         ],
                         plugins: ["@babel/plugin-transform-arrow-functions",
-                            "@babel/plugin-proposal-class-properties"]
+                            "@babel/plugin-transform-class-properties"]
                     }
                 }
             },
@@ -74,16 +74,17 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         new HtmlWebpackPlugin({
-            template: require('html-webpack-template'),
+            template: 'src/index.html',
             inject: true,
-            title: 'Fitness Routine Timer',
-            mobile: true,
-            meta: {
-                "apple-mobile-web-app-status-bar": "#db4938",
-                "theme-color": "#db4938"
-            },
-            appMountId: 'app',
-            appMountHtmlSnippet: '<h1>Fitness Routine Timer</h1><div id="routine_list"></div><div id="routine_detail"></div><div id="routine_timer"></div><footer>[AIV]Version {version}, {date}[/AIV]</footer>',
+            version: require('./package.json').version,
+            buildDate: new Date().toLocaleString('en-GB', { 
+                day: 'numeric', 
+                month: 'short', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            })
         }),
         new CssMinimizerPlugin(),
         new WorkboxPlugin.GenerateSW({
