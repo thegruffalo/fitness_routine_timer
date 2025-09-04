@@ -9,7 +9,7 @@
     <div id="time_left"><span>{{to_time vm.time_left}}</span> to go</div>
     {{#with vm}}
     {{#with current}}
-        <div id="interval_current"><span>{{group_name}}</span><span> - </span><span>{{name}}</span></div>
+    <div id="interval_current"><span>{{name}}</span></div>
         <div id="interval_time_left"><span>{{to_time time_left}}</span></div>
         <div>{{set_detail}}</div>
     {{/with}}
@@ -18,8 +18,6 @@
         <ul>
         {{#each coming_up}}
         <li>
-            <span>{{group_name}}</span>
-            <span> - </span>
             <span>{{name}}</span>
         </li>
         {{/each}}
