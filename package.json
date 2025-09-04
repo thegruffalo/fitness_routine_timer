@@ -1,6 +1,6 @@
 {
     "name": "fitness_routine_timer",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Progressive Web App (PWA) Fitness Routine Timer",
     "main": "app.js",
     "scripts": {
