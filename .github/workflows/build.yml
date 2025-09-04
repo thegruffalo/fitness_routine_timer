@@ -4,6 +4,8 @@ on:
     branches: [master]
     paths-ignore:
     - 'docs/**'
+  pull_request:
+    branches: [master]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,7 +23,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Commit files
-#        uses: actions/checkout@v3
+        if: github.ref == 'refs/heads/master'
         run: |
           date > docs/updated.txt
           git config user.name github-actions
