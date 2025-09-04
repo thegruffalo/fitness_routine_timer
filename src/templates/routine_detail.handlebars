@@ -1,5 +1,8 @@
     <div class="container card">
     <h1>{{name}}</h1>
+    {{#if group}}
+    <div class="group-info">From: {{group}}</div>
+    {{/if}}
     <div class="detail-container">
     {{#each sub_routines}}
     <details {{summary_open}}>

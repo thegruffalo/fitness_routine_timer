@@ -21,7 +21,7 @@ module.exports = {
                 options: {
                     precompileOptions: {
                         knownHelpersOnly: true,
-                        knownHelpers: ["to_time", "if_gt"]
+                        knownHelpers: ["to_time", "if_gt", "groupBy"]
                     }
                 }
             },
