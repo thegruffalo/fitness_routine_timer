@@ -10,6 +10,7 @@ This document provides essential context for AI agents working with the Fitness 
    - Branch naming convention: `feature/descriptive-name`
 
 2. **Code Integration**:
+   - Code MUST build successfully locally before pushing
    - All code MUST be pushed to GitHub
    - Changes MUST be merged via Pull Requests
    - Direct merges to main branch are not allowed
