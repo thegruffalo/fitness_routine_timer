@@ -1,24 +1,52 @@
-    <div class="container card">
+<div class="container card">
     <h1>{{name}}</h1>
-    {{#if group}}
-    <div class="group-info">From: {{group}}</div>
-    {{/if}}
     <div class="detail-container">
-    {{#each sub_routines}}
-    <details {{summary_open}}>
-        <summary><span>{{name}}</span>
-        {{#if_gt sets 1}}
-            <span>- x{{sets}}</h1>
-        {{/if_gt}}
+        {{#each sub_routines}}
+        <details {{summary_open}}>
+            <summary><span>{{name}}</span>
+                {{#if_gt sets 1}}
+                <span>- x{{sets}}</span>
+                {{/if_gt}}
             </summary>
             {{#each intervals}}
-            <div>{{name}} - {{duration}}s</div>
+            <div class="exercise-row">
+                <span class="exercise-name">{{name}} - {{duration}}s</span>
+                {{#if benefits}}
+                <div class="info-icons">
+                    <svg class="info-icon benefits" data-exercise="{{name}}" data-type="benefits" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {{#if execution_notes}}
+                    <svg class="info-icon execution" data-exercise="{{name}}" data-type="execution" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {{/if}}
+                </div>
+                {{/if}}
+            </div>
             {{/each}}
-    </details>
-    {{/each}}
+        </details>
+        {{/each}}
+    </div>
+    <div class="buttons">
+        <a class="btn btn-blue" id="close">Close</a>
+        <a class="btn btn-green" id="start">Start</a>
+    </div>
 </div>
-<div class="buttons">
-    <a class="btn btn-blue" id="close">Close</a>
-    <a class="btn btn-green" id="start">Start</a>
-</div>
+
+<div class="modal-backdrop" id="infoModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle"></h2>
+            <button class="close-modal" aria-label="Close modal">×</button>
+        </div>
+        <div class="modal-section benefits-section">
+            <h3>Benefits</h3>
+            <p id="modalBenefits"></p>
+        </div>
+        <div class="modal-section execution-section">
+            <h3>How to Perform</h3>
+            <p id="modalExecution"></p>
+        </div>
+    </div>
 </div>

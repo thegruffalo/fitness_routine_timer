@@ -24,7 +24,9 @@ export default
             },
             {
                 "name": "Lunge & stretch",
-                "duration": 20
+                "duration": 20,
+                "execution_notes": "Switch legs halfway through",
+                "split": 2
             },
             {
                 "name": "Jog",
@@ -36,11 +38,15 @@ export default
             },
             {
                 "name": "Shoulder Roll",
-                "duration": 15
+                "duration": 15,
+                "execution_notes": "Switch direction halfway through",
+                "split": 2
             },
             {
                 "name": "Core rotation",
-                "duration": 15
+                "duration": 15,
+                "execution_notes": "Switch sides halfway through",
+                "split": 2
             }
         ],
         "sets": 1,

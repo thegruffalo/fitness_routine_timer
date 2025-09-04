@@ -1,6 +1,7 @@
+import { beep } from './sound.js';
 
 export class CountdownTimerVM {
-    constructor(group_name, name, duration, alert_with_time_to_go, set_detail) {
+    constructor(group_name, name, duration, alert_with_time_to_go, set_detail, split) {
         this.group_name = group_name;
         this.name = name;
         this.duration = duration;
@@ -8,6 +9,8 @@ export class CountdownTimerVM {
         this.set_detail = set_detail;
         this.time_left_ms = duration * 1000;
         this.alerting = false;
+        this.split = split;
+        this.splits_alerted = 0;
     }
     get time_left() {
         return Math.floor(this.time_left_ms / 1000);
@@ -54,9 +57,21 @@ export class RoutineTimerVM {
         } 
         this.update_ui_fn();
 
+        // Handle regular end-of-interval alert
         if (this.current && !this.current.alerting && this.current.time_left_ms < (this.current.alert_with_time_to_go * 1000)) {
             this.current.alerting = true;
             this.alert_fn(this.current);
+        }
+
+        // Handle split alert
+        if (this.current && this.current.split && this.current.splits_alerted < this.current.split - 1) {
+            const splitDuration = Math.floor(this.current.duration * 1000 / this.current.split);
+            const nextSplitTime = splitDuration * (this.current.split - this.current.splits_alerted - 1);
+            
+            if (this.current.time_left_ms <= nextSplitTime + 250 && this.current.time_left_ms > nextSplitTime - 250) {
+                this.current.splits_alerted++;
+                beep();
+            }
         }
     }
 }

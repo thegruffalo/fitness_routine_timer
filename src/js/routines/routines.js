@@ -19,9 +19,11 @@ import bodyWeight from './body_weight_1.js';
 // Rehabilitation & Strength
 import kneeRehab from './knee_rehab.js';
 import legStrength from './leg_strength.js';
+import hipMobility from './hip_mobility.js';
 
 // Development
 import test from './test.js';
+import splitTest from './split_test.js';
 
 // Group definitions
 const quickWorkouts = [
@@ -47,11 +49,13 @@ const bodyWeightRoutines = [
 
 const rehabAndStrength = [
   { ...kneeRehab, group: 'Rehabilitation & Strength' },
-  { ...legStrength, group: 'Rehabilitation & Strength' }
+  { ...legStrength, group: 'Rehabilitation & Strength' },
+  { ...hipMobility, group: 'Rehabilitation & Strength' }
 ];
 
 const development = [
-  { ...test, group: 'Development' }
+  { ...test, group: 'Development' },
+  { ...splitTest, group: 'Development' }
 ];
 
 // Export all routines with their group information

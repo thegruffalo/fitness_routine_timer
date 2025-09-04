@@ -11,10 +11,12 @@ const showRoutineTimer = require("../templates/routine_timer.handlebars");
 const showRoutineTimerDisplay = require("../templates/routine_timer_display.handlebars");
 import css from '../style.less';
 
-// Register the groupBy helper
+// Register helpers
 Handlebars.registerHelper('log', function(something) {
     console.log(something);
 });
+
+// No longer using eq or not helpers
 
 // Register the groupBy helper
 Handlebars.registerHelper('groupBy', function(array, property) {
@@ -85,7 +87,7 @@ class RoutineTimer {
           countdownTimerVMs.push(timerVM);
         }
         sr.intervals.forEach((i) => {
-          let timerVM = new CountdownTimerVM(routine.group || routine.name, i.name, i.duration, 3, set_detail);
+          let timerVM = new CountdownTimerVM(routine.group || routine.name, i.name, i.duration, 3, set_detail, i.split);
           countdownTimerVMs.push(timerVM);
         });
         if (sr.duration_between_sets > 0 && i < sr.sets) {
@@ -98,10 +100,10 @@ class RoutineTimer {
         countdownTimerVMs.push(timerVM);
       }
     });
-    this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn, this.alert_fn);
+    this.vm = new RoutineTimerVM(routine.name, countdownTimerVMs, this.update_ui_fn, this.end_alert_fn);
   }
 
-  alert_fn(interval) {
+  end_alert_fn(interval) {
     beep();
     var i = 0;
     for (i = 1; i < interval.alert_with_time_to_go; i++) {
@@ -191,9 +193,60 @@ const startRoutine = (routine) => {
 
 }
 
+const setupModal = (routine) => {
+  const modal = u("#infoModal");
+  const modalTitle = u("#modalTitle");
+  const modalBenefits = u("#modalBenefits");
+  const modalExecution = u("#modalExecution");
+
+  // Close modal on backdrop click
+  modal.on("click", (e) => {
+    if (e.target === modal.first()) {
+      modal.removeClass("show");
+    }
+  });
+
+  // Close modal on X button click
+  u(".close-modal").on("click", () => {
+    modal.removeClass("show");
+  });
+
+  // Handle info icon clicks
+  u(".info-icon").on("click", (e) => {
+    const icon = u(e.currentTarget);
+    const exerciseName = icon.data("exercise");
+    const type = icon.data("type");
+    
+    // Find the exercise data
+    let exercise = null;
+    routine.sub_routines.forEach(sr => {
+      const found = sr.intervals.find(i => i.name === exerciseName);
+      if (found) exercise = found;
+    });
+
+    if (exercise) {
+      modalTitle.text(exercise.name);
+      if (exercise.benefits) {
+        modalBenefits.text(exercise.benefits);
+        u(".benefits-section").first().style.display = "block";
+      } else {
+        u(".benefits-section").first().style.display = "none";
+      }
+      if (exercise.execution_notes) {
+        modalExecution.text(exercise.execution_notes);
+        u(".execution-section").first().style.display = "block";
+      } else {
+        u(".execution-section").first().style.display = "none";
+      }
+      modal.addClass("show");
+    }
+  });
+};
+
 const displayRoutine = (routine) => {
   u("#routine_list .container").remove();
   document.getElementById("routine_detail").innerHTML = showRoutineDetail(routine);
+  setupModal(routine);
   u("#routine_detail #close").on("click", (ev) => {
     u("#routine_detail .container").remove();
     displayRoutineList();
