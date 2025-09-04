@@ -75,7 +75,16 @@ module.exports = {
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         new HtmlWebpackPlugin({
             template: 'src/index.html',
-            inject: true
+            inject: true,
+            version: require('./package.json').version,
+            buildDate: new Date().toLocaleString('en-GB', { 
+                day: 'numeric', 
+                month: 'short', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            })
         }),
         new CssMinimizerPlugin(),
         new WorkboxPlugin.GenerateSW({
