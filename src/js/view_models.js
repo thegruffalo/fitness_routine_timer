@@ -1,4 +1,5 @@
 import { beep } from './sound.js';
+import { updateRoutineCompletion } from './storage.js';
 
 export class CountdownTimerVM {
     constructor(group_name, name, duration, alert_with_time_to_go, set_detail, split) {
@@ -17,7 +18,7 @@ export class CountdownTimerVM {
     }
 }
 export class RoutineTimerVM {
-    constructor(name, countdown_timers, update_ui_fn, alert_fn) {
+    constructor(name, countdown_timers, update_ui_fn, alert_fn, sessionId = null) {
         this.name = name;
         this.countdown_timers = countdown_timers || [];
         this.total_duration = countdown_timers.reduce((p, c) => { return p + c.duration; }, 0);
@@ -26,6 +27,7 @@ export class RoutineTimerVM {
         this.alert_fn = alert_fn;
         this.time_elapsed_ms = 0;
         this.last_time = 0;
+        this.sessionId = sessionId; // For tracking completion
     }
     get time_left() {
         return this.total_duration - Math.floor(this.time_elapsed_ms / 1000);
@@ -49,6 +51,12 @@ export class RoutineTimerVM {
         this.time_elapsed_ms += ms;
         this.current.time_left_ms -= ms;
         if (this.current.time_left_ms < 0){
+            // Store completion data when an interval ends
+            if (this.sessionId) {
+                const timeSpentSeconds = Math.floor(this.time_elapsed_ms / 1000);
+                updateRoutineCompletion(this.sessionId, timeSpentSeconds, false);
+            }
+            
             if (this.next) {
                 this.next.time_left_ms += this.current.time_left_ms;
             }
