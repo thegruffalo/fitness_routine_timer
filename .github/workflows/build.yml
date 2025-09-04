@@ -1,11 +1,11 @@
 name: Build
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths-ignore:
     - 'docs/**'
   pull_request:
-    branches: [master]
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Commit files
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         run: |
           date > docs/updated.txt
           git config user.name github-actions
