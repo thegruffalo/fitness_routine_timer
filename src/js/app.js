@@ -225,7 +225,9 @@ const setupModal = (routine) => {
 };
 
 const displayRoutine = (routine) => {
+  // Remove the list containers and their group headers so the list UI fully clears
   u("#routine_list .container").remove();
+  u("#routine_list .group-header").remove();
   document.getElementById("routine_detail").innerHTML = showRoutineDetail(routine);
   setupModal(routine);
   u("#routine_detail #close").on("click", (ev) => {
