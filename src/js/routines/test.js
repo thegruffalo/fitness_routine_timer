@@ -7,7 +7,9 @@ export default
             "intervals": [
                 {
                     "name": "Jog",
-                    "duration": 10
+                    "duration": 10,
+                    "benefits": "Warms up muscles and increases heart rate gradually",
+                    "execution_notes": "Light pace, focus on controlled breathing and relaxed form"
                 }
             ],
             "sets": 1,
@@ -20,7 +22,8 @@ export default
             "intervals": [
                 {
                     "name": "Jumping Jacks",
-                    "duration": 7
+                    "duration": 7,
+                    "benefits": "Full body warm-up, improves coordination",
                 },
                 {
                     "name": "Rest",
@@ -28,7 +31,8 @@ export default
                 },
                 {
                     "name": "Press ups",
-                    "duration": 7
+                    "duration": 7,
+                    "execution_notes": "Keep body straight, elbows at 45 degrees. Lower chest to ground"
                 },
             ],
             "sets": 2,
@@ -41,11 +45,15 @@ export default
             "intervals": [
                 {
                     "name": "Quad R",
-                    "duration": 10
+                    "duration": 10,
+                    "benefits": "Stretches right quadriceps, improves leg flexibility",
+                    "execution_notes": "Stand on left leg, hold right foot behind. Keep torso upright"
                 },
                 {
                     "name": "Quad L",
-                    "duration": 10
+                    "duration": 10,
+                    "benefits": "Stretches left quadriceps, improves leg flexibility",
+                    "execution_notes": "Stand on right leg, hold left foot behind. Keep torso upright"
                 }          ],
             "sets": 1,
             "duration_between_sets": 0,

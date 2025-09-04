@@ -98,7 +98,7 @@ module.exports = {
             short_name: 'Fit Timer',
             description: 'Fitness Routine Timer',
             background_color: '#fdfdfd',
-            theme_color: "#db4938",
+            theme_color: "#5B21B6",
             icons: [
               {
                 src: path.resolve('src/images/large_icon.png'),
