@@ -4,11 +4,42 @@ import { beep } from './sound.js';
 import routines from './routines/routines.js'
 import { CountdownTimerVM, RoutineTimerVM } from './view_models.js';
 import u from 'umbrellajs';
+const Handlebars = require('handlebars/runtime');
 const showListOfRoutines = require('../templates/routine_list.handlebars');
 const showRoutineDetail = require("../templates/routine_detail.handlebars");
 const showRoutineTimer = require("../templates/routine_timer.handlebars");
 const showRoutineTimerDisplay = require("../templates/routine_timer_display.handlebars");
 import css from '../style.less';
+
+// Register the groupBy helper
+Handlebars.registerHelper('log', function(something) {
+    console.log(something);
+});
+
+// Register the groupBy helper
+Handlebars.registerHelper('groupBy', function(array, property) {
+    console.log('Grouping array:', array);
+    console.log('By property:', property);
+    
+    const grouped = array.reduce((acc, obj) => {
+        const key = obj[property] || 'Ungrouped';  // Use 'Ungrouped' if property is undefined
+        if (!acc[key]) {
+            acc[key] = [];
+        }
+        acc[key].push({...obj}); // Make a copy of the object
+        return acc;
+    }, {});
+
+    console.log('Grouped result:', grouped);
+    
+    // Convert to array of group objects, sorted alphabetically
+    return Object.entries(grouped)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([groupName, items]) => ({
+            groupName,
+            items
+        }));
+});
 const app_container = document.getElementById("app");
 const myNS = {
 };
@@ -50,20 +81,20 @@ class RoutineTimer {
           set_detail = `Set ${i} of ${sr.sets}`;
         }
         if (i == 1 && sr.start_delay > 0) {
-          let timerVM = new CountdownTimerVM(sr.name, "Get ready!", sr.start_delay, 3, set_detail);
+          let timerVM = new CountdownTimerVM(routine.group || routine.name, "Get ready!", sr.start_delay, 3, set_detail);
           countdownTimerVMs.push(timerVM);
         }
         sr.intervals.forEach((i) => {
-          let timerVM = new CountdownTimerVM(sr.name, i.name, i.duration, 3, set_detail);
+          let timerVM = new CountdownTimerVM(routine.group || routine.name, i.name, i.duration, 3, set_detail);
           countdownTimerVMs.push(timerVM);
         });
         if (sr.duration_between_sets > 0 && i < sr.sets) {
-          let timerVM = new CountdownTimerVM(sr.name, "Set complete!", sr.duration_between_sets, 3, set_detail);
+          let timerVM = new CountdownTimerVM(routine.group || routine.name, "Set complete!", sr.duration_between_sets, 3, set_detail);
           countdownTimerVMs.push(timerVM);
         }
       }
       if (i == sr.sets && sr.end_delay > 0) {
-        let timerVM = new CountdownTimerVM(sr.name, "Well done!", sr.end_delay, 3, set_detail);
+        let timerVM = new CountdownTimerVM(routine.group || routine.name, "Well done!", sr.end_delay, 3, set_detail);
         countdownTimerVMs.push(timerVM);
       }
     });
@@ -175,8 +206,24 @@ const displayRoutine = (routine) => {
 const displayRoutineList = () => {
   document.getElementById("routine_list").innerHTML = showListOfRoutines(routines);
   u("#routine_list .card").on("click", (ev) => {
-    var itemIndex = u(ev.currentTarget).data("item");
-    displayRoutine(routines[itemIndex]);
+    const card = u(ev.currentTarget);
+    const cardName = card.find('h1').text().trim();
+    
+    // For progressive program cards, parse week and session
+    const weekMatch = cardName.match(/Week (\d+) - Session (\d+)/);
+    let routine;
+    
+    if (weekMatch) {
+      const week = parseInt(weekMatch[1]);
+      const session = parseInt(weekMatch[2]);
+      routine = routines.find(r => r.week === week && r.session === session);
+    } else {
+      routine = routines.find(r => r.name === cardName);
+    }
+    
+    if (routine) {
+      displayRoutine(routine);
+    }
   });
 };
 
