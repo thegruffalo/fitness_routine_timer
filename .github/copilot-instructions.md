@@ -2,6 +2,19 @@
 
 This document provides essential context for AI agents working with the Fitness Routine Timer Progressive Web App (PWA).
 
+## Git Workflow Requirements
+
+1. **Branch Management**:
+   - New work MUST be done on a new feature branch
+   - Branches must be created from latest main branch
+   - Branch naming convention: `feature/descriptive-name`
+
+2. **Code Integration**:
+   - All code MUST be pushed to GitHub
+   - Changes MUST be merged via Pull Requests
+   - Direct merges to main branch are not allowed
+   - PRs must include clear descriptions of changes
+
 ## Project Overview
 
 This is a vanilla JavaScript PWA that provides interval-based fitness routines with countdown timers. It supports:
@@ -49,9 +62,20 @@ This is a vanilla JavaScript PWA that provides interval-based fitness routines w
    npm run serve  # Test production build
    ```
 
-2. **Adding New Routines**:
+2. **Making Changes**:
+   - Create new feature branch from latest main
+   - Make necessary code changes
+   - Test changes locally
+   - Push branch to GitHub
+   - Create Pull Request for review
+   - Address review comments if any
+   - Merge via GitHub interface
+
+3. **Adding New Routines**:
+   - Create feature branch from latest main
    - Create new routine file in `src/js/routines/`
    - Import and add to array in `src/js/routines/routines.js`
+   - Create PR for review and merge
 
 ## Project Conventions
 
