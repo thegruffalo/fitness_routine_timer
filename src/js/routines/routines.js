@@ -11,6 +11,8 @@ import w3s1 from './week_3_session_1.js';
 import w3s2 from './week_3_session_2.js';
 import w3s3 from './week_3_session_3.js';
 import t from './test.js';
+import kr from './knee_rehab.js';
+import ls from './leg_strength.js';
 
 export default[
     s1,
@@ -25,5 +27,7 @@ export default[
     w3s1,
     w3s2,
     w3s3,
-    t
+    t,
+    kr,
+    ls
   ];
