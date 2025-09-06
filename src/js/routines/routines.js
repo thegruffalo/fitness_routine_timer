@@ -19,6 +19,7 @@ import bodyWeight from './body_weight_1.js';
 // Rehabilitation & Strength
 import kneeRehab from './knee_rehab.js';
 import legStrength from './leg_strength.js';
+import advancedLegStrength from './advanced_leg_strength.js';
 import hipMobility from './hip_mobility.js';
 
 // Development
@@ -37,7 +38,8 @@ export default [
       kneeRehab,
       hipMobility,
       legStrength,
-      w1s1
+      w1s1,
+      advancedLegStrength,
     ]
   },
   {
@@ -72,6 +74,7 @@ export default [
     routines: [
       kneeRehab,
       legStrength,
+      advancedLegStrength,
       hipMobility
     ]
   },
