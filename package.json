@@ -49,7 +49,7 @@
         "core-js": "^3.45.1",
         "handlebars": "^4.7.8",
         "handlebars-loader": "^1.7.2",
-        "regenerator-runtime": "^0.13.11",
+        "regenerator-runtime": "^0.14.1",
         "umbrellajs": "^3.3.3"
     }
 }
