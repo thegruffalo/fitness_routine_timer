@@ -1,3 +1,6 @@
+import rest from "./rest";
+const rest_short = rest(5);
+const rest_long = rest(15);
 export default {
     "name": "Hip Mobility",
     "sub_routines": [
@@ -71,50 +74,35 @@ export default {
                     "benefits": "Deep stretch for hip rotators and glutes",
                     "execution_notes": "Both legs bent 90°, one forward, one to side. Keep back straight. Lean forward slightly to intensify."
                 },
-                {
-                    "name": "Rest",
-                    "duration": 5
-                },
+                rest_short,
                 {
                     "name": "90/90 Hip Stretch - Right",
                     "duration": 45,
                     "benefits": "Balances hip mobility work",
                     "execution_notes": "Mirror left side position. Keep both hips grounded throughout the stretch."
                 },
-                {
-                    "name": "Rest",
-                    "duration": 5
-                },
+                rest_short,
                 {
                     "name": "Butterfly Stretch",
                     "duration": 45,
                     "benefits": "Opens hips, stretches adductors and groin",
                     "execution_notes": "Sit with feet together, knees out. Hold feet, lean forward slightly. Keep back straight."
                 },
-                {
-                    "name": "Rest",
-                    "duration": 15
-                },
+                rest_long,
                 {
                     "name": "Pigeon Pose - Left",
                     "duration": 45,
                     "benefits": "Deep hip opener, stretches piriformis and glutes",
                     "execution_notes": "Front leg bent, back leg straight. Keep hips level. Lean forward as comfortable."
                 },
-                {
-                    "name": "Rest",
-                    "duration": 5
-                },
+                rest_short,
                 {
                     "name": "Pigeon Pose - Right",
                     "duration": 45,
                     "benefits": "Completes deep hip opening work",
                     "execution_notes": "Mirror left side exactly. Use props under hips if needed for alignment."
                 },
-                {
-                    "name": "Rest",
-                    "duration": 5
-                },
+                rest_short,
                 {
                     "name": "Happy Baby Pose",
                     "duration": 45,
@@ -123,7 +111,7 @@ export default {
                 }
             ],
             "sets": 1,
-            "start_delay": 20,
+            "start_delay": 5,
             "end_delay": 0
         }
     ]

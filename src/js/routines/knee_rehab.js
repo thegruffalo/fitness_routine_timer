@@ -83,9 +83,9 @@ export default
                     "execution_notes": "Lie on back, heels on sliders. Bridge up, then slide feet out and in while maintaining bridge"
                 }
             ],
-            "sets": 3,
-            "duration_between_sets": 60,
-            "start_delay": 10,
+            "sets": 2,
+            "duration_between_sets": 30,
+            "start_delay": 5,
             "end_delay": 0
         }
     ]
