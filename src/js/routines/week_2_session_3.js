@@ -1,5 +1,8 @@
 import cooldown from "./cooldown";
 import warmup from "./warmup";
+import rest from "./rest";
+
+const my_rest = rest(20);
 
 export default
 {
@@ -13,42 +16,27 @@ export default
                     "name": "Front raises",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Push up",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Crunches",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Shoulder shrug",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Bent over row",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Hammer curl",
                     "duration": 40

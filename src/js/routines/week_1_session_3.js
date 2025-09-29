@@ -1,5 +1,8 @@
 import cooldown from "./cooldown";
 import warmup from "./warmup";
+import rest from "./rest";
+
+const my_rest = rest(20);
 
 export default
 {
@@ -13,58 +16,37 @@ export default
                     "name": "Front raises",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Push ups",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Crunches",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Shoulder shrugs",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Bent over row",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Walk out w push up",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Shoulder press",
                     "duration": 40
                 },
-                {
-                    "name": "Rest",
-                    "duration": 20
-                },
+                my_rest,
                 {
                     "name": "Hammer curls",
                     "duration": 40

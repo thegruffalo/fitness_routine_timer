@@ -45,8 +45,7 @@ export default
             {
                 "name": "Core rotation",
                 "duration": 15,
-                "execution_notes": "Switch sides halfway through",
-                "split": 2
+                "execution_notes": "Switch sides halfway through"
             }
         ],
         "sets": 1,
