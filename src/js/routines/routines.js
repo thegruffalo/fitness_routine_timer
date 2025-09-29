@@ -18,6 +18,7 @@ import bodyWeight from './body_weight_1.js';
 
 // Rehabilitation & Strength
 import kneeRehab from './knee_rehab.js';
+import kneeStability from './knee_stability.js';
 import legStrength from './leg_strength.js';
 import advancedLegStrength from './advanced_leg_strength.js';
 import hipMobility from './hip_mobility.js';
@@ -36,6 +37,7 @@ export default [
     routines: [
       // Common set (explicit allocation)
       kneeRehab,
+      kneeStability,
       hipMobility,
       legStrength,
       w1s1,
@@ -73,6 +75,7 @@ export default [
     name: 'Rehabilitation & Strength',
     routines: [
       kneeRehab,
+      kneeStability,
       legStrength,
       advancedLegStrength,
       hipMobility
