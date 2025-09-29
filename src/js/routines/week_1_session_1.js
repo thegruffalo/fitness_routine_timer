@@ -2,7 +2,7 @@ import warmup from "./warmup";
 import cooldown from "./cooldown";
 import rest from "./rest";
 
-my_rest = rest(10);
+const my_rest = rest(10);
 export default
 {
     "name": "Week 1 Session 1",
