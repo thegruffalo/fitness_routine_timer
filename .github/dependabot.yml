@@ -22,12 +22,10 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-    # Require packages to be at least 7 days old
-    pull-request-branch-name:
-      separator: "-"
+    # Add cooldown to avoid immature packages
+    cooldown:
+      default-days: 7
     target-branch: "main"
-    reviewers: []
-    assignees: []
     labels:
       - "dependencies"
       - "devcontainer"
@@ -72,21 +70,16 @@ updates:
         update-types: ["version-update:semver-major"]
     # Limit number of open PRs
     open-pull-requests-limit: 3
+    # Add cooldown to avoid immature packages
+    cooldown:
+      default-days: 7
     target-branch: "main"
-    reviewers: []
-    assignees: []
     labels:
       - "dependencies"
       - "npm"
     commit-message:
       prefix: "chore(deps)"
       include: "scope"
-    # Minimize noise by only updating dependencies older than 7 days
-# Define cooldown periods for different version types
-    cooldown:
-      default-days: 7
-    pull-request-branch-name:
-      separator: "-"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -104,9 +97,10 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+    # Add cooldown to avoid immature packages
+    cooldown:
+      default-days: 7
     target-branch: "main"
-    reviewers: []
-    assignees: []
     labels:
       - "dependencies"
       - "github-actions"
