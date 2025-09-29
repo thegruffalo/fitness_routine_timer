@@ -6,15 +6,110 @@
 
 version: 2
 updates:
- - package-ecosystem: "devcontainers"
-   directory: "/"
-   schedule:
-     interval: weekly
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    # Group all devcontainer updates into single PR
+    groups:
+      devcontainer-updates:
+        patterns:
+          - "*"
+    # Only allow minor and patch updates
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    # Require packages to be at least 7 days old
+    pull-request-branch-name:
+      separator: "-"
+    target-branch: "main"
+    reviewers: []
+    assignees: []
+    labels:
+      - "dependencies"
+      - "devcontainer"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+      day: "monday" 
+      time: "09:00"
+      timezone: "UTC"
+    # Group npm updates by type to reduce PR count
+    groups:
+      npm-production:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@types/*"
+          - "*-dev"
+          - "eslint*"
+          - "webpack*"
+          - "babel*"
+        update-types:
+          - "minor"
+          - "patch"
+      npm-development:
+        patterns:
+          - "@types/*"
+          - "*-dev" 
+          - "eslint*"
+          - "webpack*"
+          - "babel*"
+        update-types:
+          - "minor"
+          - "patch"
+    # Only allow minor and patch updates, no major versions
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    # Limit number of open PRs
+    open-pull-requests-limit: 3
+    target-branch: "main"
+    reviewers: []
+    assignees: []
+    labels:
+      - "dependencies"
+      - "npm"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    # Minimize noise by only updating dependencies older than 7 days
+# Define cooldown periods for different version types
+    cooldown:
+      default-days: 7
+    pull-request-branch-name:
+      separator: "-"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+      day: "monday"
+      time: "09:00" 
+      timezone: "UTC"
+    # Group all GitHub Actions updates into single PR
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    # Only allow minor and patch updates
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    target-branch: "main"
+    reviewers: []
+    assignees: []
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
