@@ -31,6 +31,8 @@ import kettlebell_2 from './kettlebell_2.js';
 // Julia
 
 import julia_1 from './julia_1.js';
+import julia_2 from './julia_2.js';
+import julia_3 from './julia_3.js';
 
 // Development
 import test from './test.js';
@@ -56,7 +58,9 @@ export default [
   {
     name: "Julia Routines",
     routines: [
-      julia_1
+      julia_1,
+      julia_2,
+      julia_3
     ]
   },
   {
