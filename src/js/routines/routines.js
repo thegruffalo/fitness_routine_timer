@@ -23,6 +23,15 @@ import legStrength from './leg_strength.js';
 import advancedLegStrength from './advanced_leg_strength.js';
 import hipMobility from './hip_mobility.js';
 
+
+// Kettlebells
+import kettlebell_1 from './kettlebell_1.js';
+import kettlebell_2 from './kettlebell_2.js';
+
+// Julia
+
+import julia_1 from './julia_1.js';
+
 // Development
 import test from './test.js';
 import splitTest from './split_test.js';
@@ -42,6 +51,12 @@ export default [
       legStrength,
       w1s1,
       advancedLegStrength,
+    ]
+  },
+  {
+    name: "Julia Routines",
+    routines: [
+      julia_1
     ]
   },
   {
@@ -79,6 +94,13 @@ export default [
       legStrength,
       advancedLegStrength,
       hipMobility
+    ]
+  },
+  {
+    name: "Kettlebells",
+    routines: [
+      kettlebell_1,
+      kettlebell_2
     ]
   },
   {
