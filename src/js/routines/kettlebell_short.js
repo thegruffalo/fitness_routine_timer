@@ -3,7 +3,7 @@ import rest from "./rest";
 const my_rest = rest(20);
 export default
     {
-        "name": "Kettlebell 1",
+        "name": "Kettlebell Short",
         "sub_routines": [
             {
                 "name": "Main",
@@ -14,12 +14,13 @@ export default
                     },
                     my_rest,
                     {
-                        "name": "Overhead press Left arm",
+                        "name": "Overhead press both arms",
+                        "split": 2,
                         "duration": 40,
                     },
                     my_rest,
                     {
-                        "name": "Overhead press Right arm",
+                        "name": "Kettle bell swings",
                         "duration": 40,
                     },
                     my_rest,
