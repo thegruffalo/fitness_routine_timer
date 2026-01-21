@@ -3,7 +3,7 @@ import rest from "./rest";
 const my_rest = rest(20);
 export default
     {
-        "name": "Kettlebell 2",
+        "name": "Kettlebell Long",
         "sub_routines": [
             {
                 "name": "Main",

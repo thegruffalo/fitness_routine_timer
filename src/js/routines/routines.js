@@ -25,14 +25,14 @@ import hipMobility from './hip_mobility.js';
 
 
 // Kettlebells
-import kettlebell_1 from './kettlebell_1.js';
-import kettlebell_2 from './kettlebell_2.js';
+import kettlebell_short from './kettlebell_short.js';
+import kettlebell_long from './kettlebell_long.js';
 
 // Julia
 
-import julia_1 from './julia_1.js';
-import julia_2 from './julia_2.js';
-import julia_3 from './julia_3.js';
+import julia_general from './julia_general.js';
+import julia_2min_blast from './julia_2min_blast.js';
+import julia_abs from './julia_abs.js';
 
 // Development
 import test from './test.js';
@@ -56,11 +56,11 @@ export default [
     ]
   },
   {
-    name: "Julia Routines",
+    name: "Julia's Routines",
     routines: [
-      julia_1,
-      julia_2,
-      julia_3
+      julia_general,
+      julia_2min_blast,
+      julia_abs
     ]
   },
   {
@@ -103,8 +103,8 @@ export default [
   {
     name: "Kettlebells",
     routines: [
-      kettlebell_1,
-      kettlebell_2
+      kettlebell_short,
+      kettlebell_long
     ]
   },
   {
