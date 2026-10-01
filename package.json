@@ -38,7 +38,7 @@
         "less": "^4.9.0",
         "less-loader": "^12.3.3",
         "style-loader": "^4.0.0",
-        "webpack": "^5.109.2",
+        "webpack": "^5.111.1",
         "webpack-cli": "^6.0.1",
         "webpack-dev-server": "^6.0.0",
         "webpack-merge": "^6.0.1",
